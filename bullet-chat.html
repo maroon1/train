@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>弹幕墙</title>
+    <link rel="stylesheet" href="./styles/bullet-chat.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="canvas"></div>
+      <div class="form-item">
+        <input id="content-input" placeholder="请输入弹幕内容" type="text" />
+      </div>
+      <div class="actions">
+        <button id="emit-button" class="btn btn--primary" type="button">
+          发射
+        </button>
+        <button id="clear-button" class="btn btn--secondary" type="button">
+          清屏
+        </button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <script src="./scripts/bullet-chart.js"></script>
+  </body>
+</html>
