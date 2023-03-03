@@ -1,0 +1,34 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.header {
+  flex: none;
+}
+
+.container {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.main {
+  margin: 0 auto;
+  flex: auto;
+}
+
+.footer {
+  flex: none;
+}
+
+.fixed-container {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,75 @@
+@import url('./common.css');
+@import url('./header.css');
+@import url('./news.css');
+@import url('./footer.css');
+
+.carousel {
+  width: 100%;
+  height: 800px;
+}
+
+.carousel__item {
+  width: 100%;
+  height: 100%;
+}
+
+article p {
+  color: #8b8b8b;
+}
+
+article p + p {
+  margin-top: 24px;
+}
+
+.member {
+  position: relative;
+}
+
+.member__picture {
+  width: 100%;
+  padding-top: 140.6%;
+}
+
+.member__picture img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member__detail {
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: white;
+  line-height: 1.7;
+}
+
+.member__name {
+  font-size: 30px;
+}
+
+.member__description {
+  font-size: 14px;
+}
+
+.more {
+  display: flex;
+  align-items: center;
+}
+
+.more::before {
+  content: ' ';
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  background-image: url('../../assets/official-site/arrow-right.svg');
+  background-position: center;
+  background-size: contain;
+}
