@@ -12,6 +12,10 @@
   animation: 0.5s ease-in-out fedein;
 }
 
+.fadeout {
+  animation: fadein 0.5s ease-in-out reverse;
+}
+
 .hover-scale {
   overflow: hidden;
 }
