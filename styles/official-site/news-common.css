@@ -33,6 +33,7 @@
   position: relative;
   width: 100%;
   padding-top: 153.8%;
+  overflow: hidden;
 }
 
 .news__image img {

@@ -44,6 +44,7 @@ article p + p {
 }
 
 .member__picture {
+  position: relative;
   width: 100%;
   padding-top: 140.6%;
 }
@@ -80,6 +81,7 @@ article p + p {
 .more {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .more::before {

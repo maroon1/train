@@ -73,7 +73,10 @@
         class="fixed-container flex flex-col h-auto sm:w-[1200px] sm:pb-[20%] overflow-hidden"
       >
         <section class="px-4 sm:flex sm:flex-row sm:bg-[#f6f6f6]">
-          <article class="text-sm sm:flex-auto sm:basis-1/2 sm:px-20">
+          <article
+            class="text-sm sm:flex-auto sm:basis-1/2 sm:px-20 slidein-left"
+            data-animation="left-slide-in"
+          >
             <h2 class="page-title sm:text-5xl sm:my-6">服务范围</h2>
             <p>
               依托百度政务混合云，汇聚城市管理及公安等政务领域的自有数据及互联网公开数据，基于百度大数据多年积累的行业模型及实战经验，提供从数据整合治理到分析挖掘的一站式大数据解决方案，助力智慧政务新时代。
@@ -83,7 +86,7 @@
             </p>
           </article>
           <section
-            class="-mx-5 sm:-mx-6 sm:-mb-[20%] mt-2 sm:flex-auto sm:basis-1/2 sm:-ml-20"
+            class="fadein -mx-5 sm:-mx-6 sm:-mb-[20%] mt-2 sm:flex-auto sm:basis-1/2 sm:-ml-20 fadein"
           >
             <div class="flex items-end justify-end">
               <img
@@ -151,36 +154,41 @@
         </div>
       </section>
       <section class="team fixed-container h-auto sm:w-[1200px]">
-        <h2 class="page-title sm:text-5xl sm:my-6">团队介绍</h2>
+        <h2
+          class="page-title sm:text-5xl sm:my-6"
+          data-animation="slidein-right"
+        >
+          团队介绍
+        </h2>
         <ul class="sm:flex leading-normal">
-          <li class="member sm:basis-1/3">
+          <li class="member sm:basis-1/3 hover-scale">
             <div class="member__picture">
               <img src="./assets/official-site/member1.jpg" alt="Jon Smith" />
             </div>
-            <div class="member__detail">
+            <div class="member__detail" data-animation="fadein">
               <div class="member__name">Jon Smith</div>
               <div class="member__description">特级教师，从事教育工作10年</div>
               <div class="more sm:mt-6">More information</div>
             </div>
           </li>
-          <li class="member sm:basis-1/3">
+          <li class="member sm:basis-1/3 hover-scale">
             <div class="member__picture">
               <img src="./assets/official-site/member2.jpg" alt="Merri Bond" />
             </div>
-            <div class="member__detail">
+            <div class="member__detail" data-animation="fadein">
               <div class="member__name">Merri Bond</div>
               <div class="member__description">特级教师，从事教育工作10年</div>
               <div class="more sm:mt-6">More information</div>
             </div>
           </li>
-          <li class="member sm:basis-1/3">
+          <li class="member sm:basis-1/3 hover-scale">
             <div class="member__picture">
               <img
                 src="./assets/official-site/member3.jpg"
                 alt="Samuel Fredman"
               />
             </div>
-            <div class="member__detail">
+            <div class="member__detail" data-animation="fadein">
               <div class="member__name">Samuel Fredman</div>
               <div class="member__description">特级教师，从事教育工作10年</div>
               <div class="more sm:mt-6">More information</div>
@@ -189,53 +197,58 @@
         </ul>
       </section>
       <section class="news fixed-container h-auto sm:w-[1200px]">
-        <h2 class="page-title sm:text-5xl sm:my-6 sm:mt-12">新闻动态</h2>
+        <h2
+          class="page-title sm:text-5xl sm:my-6 sm:mt-12"
+          data-animation="slidein-right"
+        >
+          新闻动态
+        </h2>
         <ul class="news__list sm:-mx-4">
           <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
+            <div class="news__image hover-scale">
               <img src="./assets/official-site/news/news1.jpg" alt="新闻插图" />
             </div>
 
-            <h3 class="news__title sm:text-lg">
+            <h3 class="news__title sm:text-lg" data-animation="fadein">
               2022百度AI大会前夕，解读百度大脑的半年“豹变”
             </h3>
-            <p class="news__summary">
+            <p class="news__summary" data-animation="fadein">
               Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
             </p>
           </li>
           <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
+            <div class="news__image hover-scale">
               <img src="./assets/official-site/news/news2.jpg" alt="新闻插图" />
             </div>
 
-            <h3 class="news__title sm:text-lg">
+            <h3 class="news__title sm:text-lg" data-animation="fadein">
               2022百度AI大会前夕，解读百度大脑的半年“豹变”
             </h3>
-            <p class="news__summary">
+            <p class="news__summary" data-animation="fadein">
               Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
             </p>
           </li>
           <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
+            <div class="news__image hover-scale">
               <img src="./assets/official-site/news/news3.jpg" alt="新闻插图" />
             </div>
 
-            <h3 class="news__title sm:text-lg">
+            <h3 class="news__title sm:text-lg" data-animation="fadein">
               2022百度AI大会前夕，解读百度大脑的半年“豹变”
             </h3>
-            <p class="news__summary">
+            <p class="news__summary" data-animation="fadein">
               Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
             </p>
           </li>
           <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
+            <div class="news__image hover-scale">
               <img src="./assets/official-site/news/news4.jpg" alt="新闻插图" />
             </div>
 
-            <h3 class="news__title sm:text-lg">
+            <h3 class="news__title sm:text-lg" data-animation="fadein">
               2022百度AI大会前夕，解读百度大脑的半年“豹变”
             </h3>
-            <p class="news__summary">
+            <p class="news__summary" data-animation="fadein">
               Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
             </p>
           </li>

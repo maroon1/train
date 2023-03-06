@@ -58,3 +58,38 @@
     }
   });
 })();
+
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const lazyItems = document.querySelectorAll('[data-animation]');
+
+    if (lazyItems.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.intersectionRatio === 0) {
+            return;
+          }
+
+          const { animation } = entry.target.dataset;
+
+          if (!animation) {
+            return;
+          }
+          entry.target.classList.add(animation);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0,
+      },
+    );
+
+    for (const item of lazyItems) {
+      observer.observe(item);
+    }
+  });
+})();
