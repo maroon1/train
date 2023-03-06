@@ -61,9 +61,9 @@
 
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
-    const lazyItems = document.querySelectorAll('[data-animation]');
+    const animationItems = document.querySelectorAll('[data-animation]');
 
-    if (lazyItems.length === 0) {
+    if (animationItems.length === 0) {
       return;
     }
 
@@ -88,7 +88,49 @@
       },
     );
 
+    for (const item of animationItems) {
+      observer.observe(item);
+    }
+  });
+})();
+
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    /** @type {HTMLImageElement[]} */
+    const lazyItems = document.querySelectorAll('img[data-lazy]');
+
+    if (lazyItems.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.intersectionRatio === 0) {
+            return;
+          }
+
+          const { lazy } = entry.target.dataset;
+
+          entry.target.src = lazy;
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px 100px 0px',
+      },
+    );
+
     for (const item of lazyItems) {
+      // WHY: 第一屏中的图片无法显示
+      const bouding = item.getBoundingClientRect();
+
+      if (bouding.top < window.innerHeight) {
+        item.src = item.dataset.lazy;
+        continue;
+      }
+
       observer.observe(item);
     }
   });
