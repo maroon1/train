@@ -1,7 +1,6 @@
 .header {
   position: relative;
   height: 64px;
-  padding: 0 16px;
   color: #fff;
   background-color: #252429;
 }
@@ -33,6 +32,10 @@
 .header__menu img {
   width: 20px;
   height: 20px;
+}
+
+.header .fixed-container {
+  padding: 0 16px;
 }
 
 .drawer {

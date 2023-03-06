@@ -21,6 +21,24 @@ article p + p {
   margin-top: 24px;
 }
 
+.culture {
+  position: relative;
+  background-image: url('../../assets/official-site/banner4.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.culture::before {
+  content: ' ';
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .member {
   position: relative;
 }
