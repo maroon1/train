@@ -9,127 +9,164 @@
     <link rel="stylesheet" href="./styles/official-site/index.css" />
   </head>
   <body>
-    <header class="header header--transparent">
-      <div class="header__logo">
-        <img src="./assets/official-site/logo.svg" alt="Logo" />
-        <span class="header__title">企业站</span>
-      </div>
-      <div class="flex-auto"></div>
-      <div class="header__menu">
-        <img class="w-5 h-5" src="./assets/official-site/menu.svg" alt="菜单" />
+    <header class="header header--transparent sm:min-w-[1200px]">
+      <div class="fixed-container sm:w-[1200px]">
+        <div class="header__logo">
+          <img src="./assets/official-site/logo.svg" alt="Logo" />
+          <span class="header__title">企业站</span>
+        </div>
+        <div class="flex-auto"></div>
+        <div class="header__menu sm:hidden">
+          <img src="./assets/official-site/menu.svg" alt="菜单" />
+        </div>
+        <nav class="nav nav--horizontal sm:block">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a class="nav__item-text" href="official-site.html">首页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news.html">新闻列表页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news-detail.html">关于我们</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
-    <div class="carousel h-80 -mt-16">
-      <div class="carousel__item">
-        <div
-          class="w-full h-full flex flex-col items-center justify-end bg-center bg-no-repeat bg-cover bg text-white pb-12"
-          style="background-image: url('./assets/official-site/banner1.jpg')"
-        >
-          <div class="font-bold text-2xl">开启互联网+ 从我们开始</div>
-          <div class="mt-2 text-xs">
-            域名主机，网站建设，云服务器，企业邮箱一站式解决
+    <div class="drawer">
+      <div class="drawer__container">
+        <div class="drawer__closer">
+          <img src="./assets/official-site/close.svg" alt="关闭按钮" />
+        </div>
+        <nav class="drawer__content nav nav--vertical">
+          <ul>
+            <li class="nav__item">
+              <a class="nav__item-text" href="official-site.html">首页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news.html">新闻列表页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news-detail.html">关于我们</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <main class="main sm:w-[1200px]">
+      <div class="carousel h-80 -mt-16">
+        <div class="carousel__item">
+          <div
+            class="w-full h-full flex flex-col items-center justify-end bg-center bg-no-repeat bg-cover bg text-white pb-12"
+            style="background-image: url('./assets/official-site/banner1.jpg')"
+          >
+            <div class="font-bold text-2xl">开启互联网+ 从我们开始</div>
+            <div class="mt-2 text-xs">
+              域名主机，网站建设，云服务器，企业邮箱一站式解决
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <section class="px-4">
-      <article class="text-sm">
-        <h2 class="text-2xl text-center my-3">服务范围</h2>
-        <p>
-          依托百度政务混合云，汇聚城市管理及公安等政务领域的自有数据及互联网公开数据，基于百度大数据多年积累的行业模型及实战经验，提供从数据整合治理到分析挖掘的一站式大数据解决方案，助力智慧政务新时代。
-        </p>
-        <p>
-          全渠道零售方案包括B2C、O2O、B2B的场景，提供APP/小程序，支持对接饿了么、美团等第三方外卖平台，基于阿里巴巴多年沉淀的业务中台技术，建立商品、会员、交易、营销等共享服务中心，实现全渠道数据的共享和一致，帮助零售商打造线上、线下无差别的全渠道销售能力。
-        </p>
-      </article>
-    </section>
-    <section class="team">
-      <h2 class="text-2xl text-center my-3">团队介绍</h2>
-      <ul class="leading-normal">
-        <li class="member">
-          <div class="member__picture">
-            <img src="./assets/official-site/member1.jpg" alt="Jon Smith" />
-          </div>
-          <div class="member__detail">
-            <div class="member__name">Jon Smith</div>
-            <div class="member__description">特级教师，从事教育工作10年</div>
-            <div class="more">More information</div>
-          </div>
-        </li>
-        <li class="member">
-          <div class="member__picture">
-            <img src="./assets/official-site/member2.jpg" alt="Merri Bond" />
-          </div>
-          <div class="member__detail">
-            <div class="member__name">Merri Bond</div>
-            <div class="member__description">特级教师，从事教育工作10年</div>
-            <div class="more">More information</div>
-          </div>
-        </li>
-        <li class="member">
-          <div class="member__picture">
-            <img
-              src="./assets/official-site/member3.jpg"
-              alt="Samuel Fredman"
-            />
-          </div>
-          <div class="member__detail">
-            <div class="member__name">Samuel Fredman</div>
-            <div class="member__description">特级教师，从事教育工作10年</div>
-            <div class="more">More information</div>
-          </div>
-        </li>
-      </ul>
-    </section>
-    <section class="news">
-      <h2 class="text-2xl text-center my-3">新闻动态</h2>
-      <ul class="news__list">
-        <li class="news__item">
-          <div class="news__image">
-            <img src="./assets/official-site/news/news1.jpg" alt="新闻插图" />
-          </div>
-          <h3 class="news__title">
-            2022百度AI大会前夕，解读百度大脑的半年“豹变”
-          </h3>
-          <p class="news__summary">
-            Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+      <section class="px-4">
+        <article class="text-sm">
+          <h2 class="text-2xl text-center my-3">服务范围</h2>
+          <p>
+            依托百度政务混合云，汇聚城市管理及公安等政务领域的自有数据及互联网公开数据，基于百度大数据多年积累的行业模型及实战经验，提供从数据整合治理到分析挖掘的一站式大数据解决方案，助力智慧政务新时代。
           </p>
-        </li>
-        <li class="news__item">
-          <div class="news__image">
-            <img src="./assets/official-site/news/news2.jpg" alt="新闻插图" />
-          </div>
-          <h3 class="news__title">
-            2022百度AI大会前夕，解读百度大脑的半年“豹变”
-          </h3>
-          <p class="news__summary">
-            Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+          <p>
+            全渠道零售方案包括B2C、O2O、B2B的场景，提供APP/小程序，支持对接饿了么、美团等第三方外卖平台，基于阿里巴巴多年沉淀的业务中台技术，建立商品、会员、交易、营销等共享服务中心，实现全渠道数据的共享和一致，帮助零售商打造线上、线下无差别的全渠道销售能力。
           </p>
-        </li>
-        <li class="news__item">
-          <div class="news__image">
-            <img src="./assets/official-site/news/news3.jpg" alt="新闻插图" />
-          </div>
-          <h3 class="news__title">
-            2022百度AI大会前夕，解读百度大脑的半年“豹变”
-          </h3>
-          <p class="news__summary">
-            Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-          </p>
-        </li>
-        <li class="news__item">
-          <div class="news__image">
-            <img src="./assets/official-site/news/news4.jpg" alt="新闻插图" />
-          </div>
-          <h3 class="news__title">
-            2022百度AI大会前夕，解读百度大脑的半年“豹变”
-          </h3>
-          <p class="news__summary">
-            Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-          </p>
-        </li>
-      </ul>
-    </section>
+        </article>
+      </section>
+      <section class="team">
+        <h2 class="text-2xl text-center my-3">团队介绍</h2>
+        <ul class="leading-normal">
+          <li class="member">
+            <div class="member__picture">
+              <img src="./assets/official-site/member1.jpg" alt="Jon Smith" />
+            </div>
+            <div class="member__detail">
+              <div class="member__name">Jon Smith</div>
+              <div class="member__description">特级教师，从事教育工作10年</div>
+              <div class="more">More information</div>
+            </div>
+          </li>
+          <li class="member">
+            <div class="member__picture">
+              <img src="./assets/official-site/member2.jpg" alt="Merri Bond" />
+            </div>
+            <div class="member__detail">
+              <div class="member__name">Merri Bond</div>
+              <div class="member__description">特级教师，从事教育工作10年</div>
+              <div class="more">More information</div>
+            </div>
+          </li>
+          <li class="member">
+            <div class="member__picture">
+              <img
+                src="./assets/official-site/member3.jpg"
+                alt="Samuel Fredman"
+              />
+            </div>
+            <div class="member__detail">
+              <div class="member__name">Samuel Fredman</div>
+              <div class="member__description">特级教师，从事教育工作10年</div>
+              <div class="more">More information</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="news">
+        <h2 class="text-2xl text-center my-3">新闻动态</h2>
+        <ul class="news__list">
+          <li class="news__item">
+            <div class="news__image">
+              <img src="./assets/official-site/news/news1.jpg" alt="新闻插图" />
+            </div>
+            <h3 class="news__title">
+              2022百度AI大会前夕，解读百度大脑的半年“豹变”
+            </h3>
+            <p class="news__summary">
+              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+            </p>
+          </li>
+          <li class="news__item">
+            <div class="news__image">
+              <img src="./assets/official-site/news/news2.jpg" alt="新闻插图" />
+            </div>
+            <h3 class="news__title">
+              2022百度AI大会前夕，解读百度大脑的半年“豹变”
+            </h3>
+            <p class="news__summary">
+              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+            </p>
+          </li>
+          <li class="news__item">
+            <div class="news__image">
+              <img src="./assets/official-site/news/news3.jpg" alt="新闻插图" />
+            </div>
+            <h3 class="news__title">
+              2022百度AI大会前夕，解读百度大脑的半年“豹变”
+            </h3>
+            <p class="news__summary">
+              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+            </p>
+          </li>
+          <li class="news__item">
+            <div class="news__image">
+              <img src="./assets/official-site/news/news4.jpg" alt="新闻插图" />
+            </div>
+            <h3 class="news__title">
+              2022百度AI大会前夕，解读百度大脑的半年“豹变”
+            </h3>
+            <p class="news__summary">
+              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
+            </p>
+          </li>
+        </ul>
+      </section>
+    </main>
     <footer class="footer sm:min-w-[1200px]">
       <div class="fixed-container sm:w-[1200px]">
         <address class="footer__address">
