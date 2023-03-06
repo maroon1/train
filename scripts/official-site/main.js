@@ -1,20 +1,60 @@
-const $menu = document.querySelector('.header__menu');
-const $drawer = document.querySelector('.drawer');
-const $drawerCloser = document.querySelector('.drawer__closer');
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const $menu = document.querySelector('.header__menu');
+    const $drawer = document.querySelector('.drawer');
+    const $drawerCloser = document.querySelector('.drawer__closer');
+    /** @type {HTMLDivElement} */
+    const $drawerContainer = document.querySelector('.drawer__container');
 
-function toggleDrawer() {
-  $drawer.classList.toggle('drawer--active');
-}
+    if (!$drawerContainer) {
+      return;
+    }
 
-$menu.addEventListener('click', function () {
-  toggleDrawer();
-});
+    const drawerAnimation = $drawerContainer.animate(
+      [
+        {
+          transform: `translateX(100%)`,
+        },
+        {
+          transform: `translateX(0)`,
+        },
+      ],
+      {
+        duration: 300,
+        easing: 'ease-in-out',
+      },
+    );
 
-$drawerCloser.addEventListener('click', function (e) {
-  e.stopPropagation();
-  toggleDrawer();
-});
+    drawerAnimation.pause();
 
-$drawer.addEventListener('click', function () {
-  toggleDrawer();
-});
+    $menu.addEventListener('click', function () {
+      toggleDrawer();
+      $drawerContainer.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        drawerAnimation.playbackRate = 1;
+        drawerAnimation.play();
+        drawerAnimation.onfinish = () => {
+          $drawerContainer.style.transform = 'translateX(0)';
+        };
+      }, 50);
+    });
+
+    $drawerCloser.addEventListener('click', function (e) {
+      e.stopPropagation();
+      drawerAnimation.playbackRate = -1;
+      drawerAnimation.play();
+      drawerAnimation.onfinish = () => {
+        $drawerContainer.style.transform = 'translateX(100%)';
+        toggleDrawer();
+      };
+    });
+
+    $drawer.addEventListener('click', function () {
+      toggleDrawer();
+    });
+
+    function toggleDrawer() {
+      $drawer.classList.toggle('drawer--active');
+    }
+  });
+})();
