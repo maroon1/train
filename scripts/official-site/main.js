@@ -161,6 +161,9 @@
   const bannerDoms = [];
 
   /** @type {HTMLDivElement} */
+  const $carousel = document.querySelector('.carousel');
+
+  /** @type {HTMLDivElement} */
   const $carouselContainer = document.querySelector('.carousel__container');
 
   /** @type {HTMLDivElement} */
@@ -169,21 +172,35 @@
   const indicatorItems = createIndicators();
 
   let counter = 0;
-  /** @type {HTMLDivElement} */
+  /** @type {HTMLDivElement | null} */
   let currentBanner = null;
-  /** @type {HTMLDivElement} */
+  /** @type {HTMLDivElement | null} */
   let currentIndicator = null;
-  /** @type {Animation} */
+  /** @type {Animation | null} */
   let animation = null;
+
+  $carousel.addEventListener('mouseenter', function (e) {
+    if (!animation) {
+      return;
+    }
+
+    animation.pause();
+  });
+
+  $carousel.addEventListener('mouseleave', function () {
+    if (!animation) {
+      return;
+    }
+
+    animation.play();
+  });
 
   indicatorItems.forEach((item) => {
     $carouselIndicator.append(item);
   });
 
   indicatorItems.forEach((item, i) => {
-    console.log(item);
     item.addEventListener('click', function () {
-      console.log('click item');
       counter = i;
 
       bannerDoms.forEach((banner) => {
@@ -192,6 +209,7 @@
 
       animation.cancel();
       start(counter);
+      animation.pause();
     });
   });
 
@@ -282,17 +300,8 @@
       const $indicatorItem = document.createElement('div');
       $indicatorItem.classList.add('carousel__indicator-item');
       $indicatorItem.innerHTML = `
-        <svg
-          class="progress"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            class="progress__inner-bar"
-            cx="50"
-            cy="50"
-            r="40"
-          ></circle>
+        <svg class="progress" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle class="progress__inner-bar" cx="50" cy="50" r="40"></circle>
           <circle class="progress__bar" cx="50" cy="50" r="40" />
         </svg>
       `;
