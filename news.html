@@ -58,51 +58,37 @@
       <section class="news news--light">
         <h2 class="text-2xl text-center my-3">新闻动态</h2>
         <ul class="news__list sm:-mx-4">
-          <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
-              <img src="./assets/official-site/news/news1.jpg" alt="新闻插图" />
-            </div>
-            <h3 class="news__title sm:text-lg">
-              2022百度AI大会前夕，解读百度大脑的半年“豹变”
-            </h3>
-            <p class="news__summary">
-              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-            </p>
-          </li>
-          <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
-              <img src="./assets/official-site/news/news2.jpg" alt="新闻插图" />
-            </div>
-            <h3 class="news__title sm:text-lg">
-              2022百度AI大会前夕，解读百度大脑的半年“豹变”
-            </h3>
-            <p class="news__summary">
-              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-            </p>
-          </li>
-          <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
-              <img src="./assets/official-site/news/news3.jpg" alt="新闻插图" />
-            </div>
-            <h3 class="news__title sm:text-lg">
-              2022百度AI大会前夕，解读百度大脑的半年“豹变”
-            </h3>
-            <p class="news__summary">
-              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-            </p>
-          </li>
-          <li class="news__item sm:basis-1/4 sm:px-4">
-            <div class="news__image">
-              <img src="./assets/official-site/news/news4.jpg" alt="新闻插图" />
-            </div>
-            <h3 class="news__title sm:text-lg">
-              2022百度AI大会前夕，解读百度大脑的半年“豹变”
-            </h3>
-            <p class="news__summary">
-              Facebook为未来的VR社交打造了一款逼真的虚拟头像系统，该系统的特点是，利用数百颗摄像头对人脸进行动作捕捉，并能生成与人脸相似度很高的虚拟头像，这些头像还能模仿人脸的大量表情。
-            </p>
-          </li>
+          <div class="news__empty">暂无数据</div>
         </ul>
+
+        <div class="pagination">
+          <select class="pagination__sizer">
+            <option value="8">8条/页</option>
+            <option value="16">16条/页</option>
+            <option value="32">32条/页</option>
+            <option value="64">64条/页</option>
+          </select>
+          <ul class="pagination__item-list">
+            <li
+              class="pagination__item pagination__prev pagination__item--disabled"
+            >
+              &lt;
+            </li>
+            <li class="pagination__item">1</li>
+            <li class="pagination__item pagination__prev-jumper">...</li>
+            <li class="pagination__item">4</li>
+            <li class="pagination__item pagination__item--active">5</li>
+            <li class="pagination__item">6</li>
+            <li class="pagination__item pagination__next-jumper">...</li>
+            <li class="pagination__item">10</li>
+            <li class="pagination__item pagination__next">&gt;</li>
+          </ul>
+          <div class="pagination__jumper">
+            前往
+            <input class="pagination__jumper-input" type="number" min="1" />
+            页
+          </div>
+        </div>
       </section>
     </main>
     <footer class="footer sm:min-w-[1200px]">
@@ -128,6 +114,7 @@
         </div>
       </div>
     </footer>
-    <script src="./scripts/official-site/main.js"></script>
+    <script src="./scripts/official-site/common.js"></script>
+    <script src="./scripts/official-site/news.js"></script>
   </body>
 </html>
