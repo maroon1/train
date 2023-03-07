@@ -24,7 +24,7 @@
             <li class="nav__item">
               <a class="nav__item-text" href="official-site.html">首页</a>
             </li>
-            <li class="nav__item">
+            <li class="nav__item nav__item--active">
               <a class="nav__item-text" href="news.html">新闻列表页</a>
             </li>
             <li class="nav__item">
@@ -62,7 +62,7 @@
         </ul>
 
         <div class="pagination">
-          <select class="pagination__sizer">
+          <select class="hidden sm:block pagination__sizer">
             <option value="8">8条/页</option>
             <option value="16">16条/页</option>
             <option value="32">32条/页</option>
@@ -83,7 +83,7 @@
             <li class="pagination__item">10</li>
             <li class="pagination__item pagination__next">&gt;</li>
           </ul>
-          <div class="pagination__jumper">
+          <div class="hidden sm:block pagination__jumper">
             前往
             <input class="pagination__jumper-input" type="number" min="1" />
             页

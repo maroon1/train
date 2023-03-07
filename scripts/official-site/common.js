@@ -29,13 +29,8 @@ const lazyloadObserver = new IntersectionObserver(
         return;
       }
 
-      const { lazy, placeholder } = entry.target.dataset;
+      setImageAttr(entry.target);
 
-      entry.target.src = lazy;
-
-      if (placeholder) {
-        entry.target.classList.add(`bg-[url('${placeholder}')]`);
-      }
       lazyloadObserver.unobserve(entry.target);
     }
   },
@@ -45,9 +40,12 @@ const lazyloadObserver = new IntersectionObserver(
   },
 );
 
-function createLazyloadImage(image, placeholderImage, alt) {
+function createLazyloadImage(image, placeholderImage, alt, srcset) {
   const $img = document.createElement('img');
   $img.setAttribute('data-lazy', image);
+  if (srcset) {
+    $img.setAttribute('data-srcset', srcset);
+  }
   $img.setAttribute('data-placeholder', placeholderImage);
   $img.setAttribute('alt', alt);
 
@@ -119,7 +117,7 @@ function observeLazyloadItems(items) {
     const bouding = item.getBoundingClientRect();
 
     if (bouding.top < window.innerHeight) {
-      item.src = item.dataset.lazy;
+      setImageAttr(item);
       continue;
     }
 
@@ -182,3 +180,77 @@ function observeLazyloadItems(items) {
     subtree: true,
   });
 })();
+
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const $menu = document.querySelector('.header__menu');
+    const $drawer = document.querySelector('.drawer');
+    const $drawerCloser = document.querySelector('.drawer__closer');
+    /** @type {HTMLDivElement} */
+    const $drawerContainer = document.querySelector('.drawer__container');
+
+    if (!$drawerContainer) {
+      return;
+    }
+
+    const drawerAnimation = $drawerContainer.animate(
+      [
+        {
+          transform: `translateX(100%)`,
+        },
+        {
+          transform: `translateX(0)`,
+        },
+      ],
+      {
+        duration: 300,
+        easing: 'ease-in-out',
+      },
+    );
+
+    drawerAnimation.pause();
+
+    $menu.addEventListener('click', function () {
+      toggleDrawer();
+      $drawerContainer.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        drawerAnimation.playbackRate = 1;
+        drawerAnimation.play();
+        drawerAnimation.onfinish = () => {
+          $drawerContainer.style.transform = 'translateX(0)';
+        };
+      }, 50);
+    });
+
+    $drawerCloser.addEventListener('click', function (e) {
+      e.stopPropagation();
+      drawerAnimation.playbackRate = -1;
+      drawerAnimation.play();
+      drawerAnimation.onfinish = () => {
+        $drawerContainer.style.transform = 'translateX(100%)';
+        toggleDrawer();
+      };
+    });
+
+    $drawer.addEventListener('click', function () {
+      toggleDrawer();
+    });
+
+    function toggleDrawer() {
+      $drawer.classList.toggle('drawer--active');
+    }
+  });
+})();
+
+function setImageAttr(img) {
+  const { lazy, placeholder, srcset } = img.dataset;
+  img.src = lazy;
+
+  if (srcset) {
+    img.srcset = srcset;
+  }
+
+  if (placeholder) {
+    img.classList.add(`bg-[url('${placeholder}')]`);
+  }
+}

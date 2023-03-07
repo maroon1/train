@@ -109,6 +109,7 @@
   transition: all ease-in-out 0.3s;
 }
 
+.nav--horizontal .nav__item.nav__item--active::after,
 .nav--horizontal .nav__item:hover::after {
   transform: scale(1);
 }

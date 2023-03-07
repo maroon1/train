@@ -1,66 +1,5 @@
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
-    const $menu = document.querySelector('.header__menu');
-    const $drawer = document.querySelector('.drawer');
-    const $drawerCloser = document.querySelector('.drawer__closer');
-    /** @type {HTMLDivElement} */
-    const $drawerContainer = document.querySelector('.drawer__container');
-
-    if (!$drawerContainer) {
-      return;
-    }
-
-    const drawerAnimation = $drawerContainer.animate(
-      [
-        {
-          transform: `translateX(100%)`,
-        },
-        {
-          transform: `translateX(0)`,
-        },
-      ],
-      {
-        duration: 300,
-        easing: 'ease-in-out',
-      },
-    );
-
-    drawerAnimation.pause();
-
-    $menu.addEventListener('click', function () {
-      toggleDrawer();
-      $drawerContainer.style.transform = 'translateX(100%)';
-      setTimeout(() => {
-        drawerAnimation.playbackRate = 1;
-        drawerAnimation.play();
-        drawerAnimation.onfinish = () => {
-          $drawerContainer.style.transform = 'translateX(0)';
-        };
-      }, 50);
-    });
-
-    $drawerCloser.addEventListener('click', function (e) {
-      e.stopPropagation();
-      drawerAnimation.playbackRate = -1;
-      drawerAnimation.play();
-      drawerAnimation.onfinish = () => {
-        $drawerContainer.style.transform = 'translateX(100%)';
-        toggleDrawer();
-      };
-    });
-
-    $drawer.addEventListener('click', function () {
-      toggleDrawer();
-    });
-
-    function toggleDrawer() {
-      $drawer.classList.toggle('drawer--active');
-    }
-  });
-})();
-
-(function () {
-  document.addEventListener('DOMContentLoaded', function () {
     const animationItems = document.querySelectorAll('[data-animation]');
 
     observeAnimationItems(animationItems);
@@ -79,18 +18,24 @@
 (function () {
   const bannerInfos = [
     {
-      image: './assets/official-site/banner1.jpg',
+      image: './assets/official-site/banner1-lg.jpg',
+      imageSet: './assets/official-site/banner1.jpg 500w',
+      imagePlaceholder: './assets/official-site/banner1-xs.jpg',
       title: '开启互联网+ 从我们开始',
       description: '域名主机，网站建设，云服务器，企业邮箱一站式解决',
     },
     {
-      image: './assets/official-site/banner2.jpg',
+      image: './assets/official-site/banner2-lg.jpg',
+      imageSet: './assets/official-site/banner2.jpg 500w',
+      imagePlaceholder: './assets/official-site/banner2-xs.jpg',
       title: '新闻中心',
       description:
         '几乎所有的伟大成就，都是团队集体协作追求远大目标的结果。这些团队的领导者挑选了团队的成员，并激励他们追求自己不敢想象的成就。',
     },
     {
-      image: './assets/official-site/banner3.jpg',
+      image: './assets/official-site/banner3-lg.jpg',
+      imageSet: './assets/official-site/banner3.jpg 500w',
+      imagePlaceholder: './assets/official-site/banner3-xs.jpg',
       title: '关于我们',
       description:
         '企业构建互联网信息技术服务平台，领先技术变革，提升产业效率，致力于使能软件企业引领发展，服务制造企业转型升级，为政企客户提供“多快好省”的信息技术服务。',
@@ -224,13 +169,24 @@
 
     const $carouselContent = document.createElement('div');
     $carouselContent.classList.add('carousel__content', 'sm:justify-center');
-    $carouselContent.style.backgroundImage = `url(${banner.image})`;
     $carouselContent.append($carouselTitle);
     $carouselContent.append($carouselDescription);
 
+    const $carouselImage = createLazyloadImage(
+      banner.image,
+      banner.imagePlaceholder,
+      '横幅',
+      banner.imageSet,
+    );
+    $carouselImage.classList.add('carousel__image');
+
+    const $carouselContentWrapper = document.createElement('div');
+    $carouselContentWrapper.className = 'carousel__content-wrapper';
+    $carouselContentWrapper.append($carouselImage, $carouselContent);
+
     const $carouselItem = document.createElement('div');
     $carouselItem.classList.add('carousel__item');
-    $carouselItem.append($carouselContent);
+    $carouselItem.append($carouselContentWrapper);
 
     return $carouselItem;
   }
