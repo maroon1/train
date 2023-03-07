@@ -45,28 +45,31 @@ const lazyloadObserver = new IntersectionObserver(
   },
 );
 
+function createLazyloadImage(image, placeholderImage, alt) {
+  const $img = document.createElement('img');
+  $img.setAttribute('data-lazy', image);
+  $img.setAttribute('data-placeholder', placeholderImage);
+  $img.setAttribute('alt', alt);
+
+  const $imgWrapper = document.createElement('div');
+  $imgWrapper.classList.add('image--loading', 'image');
+  $imgWrapper.append($img);
+
+  $img.onload = () => {
+    $imgWrapper.classList.remove('image--loading');
+  };
+
+  return $imgWrapper;
+}
+
 /**
  * @param {string} image 新闻图片
  * @param {string} title 新闻标题
  * @param {string} summary 新闻概览
  */
-function createNewsItem(image, placeholderImage, title, summary) {
-  const $img = document.createElement('img');
-  $img.setAttribute('data-lazy', image);
-  $img.setAttribute('data-placeholder', placeholderImage);
-  $img.setAttribute('alt', '新闻插图');
-
-  const $imgWrapper = document.createElement('div');
-  $imgWrapper.classList.add(
-    'news__image',
-    'hover-scale',
-    'news__image--loading',
-  );
-  $imgWrapper.append($img);
-
-  $img.onload = () => {
-    $imgWrapper.classList.remove('news__image--loading');
-  };
+function createNewsItem(image, placeholderImage, title, summary, id) {
+  const $imgWrapper = createLazyloadImage(image, placeholderImage, '新闻插图');
+  $imgWrapper.classList.add('news__image', 'hover-scale');
 
   const $title = document.createElement('h3');
   $title.classList.add('news__title', 'sm:text-lg');
@@ -78,10 +81,13 @@ function createNewsItem(image, placeholderImage, title, summary) {
   $summary.setAttribute('data-animation', 'fadein');
   $summary.textContent = summary;
 
+  const $a = document.createElement('a');
+  $a.href = `./news-detail.html?id=${id}`;
+
   const $newsItem = document.createElement('li');
   $newsItem.classList.add('news__item', 'sm:basis-1/4', 'sm:px-4');
 
-  $newsItem.append($imgWrapper, $title, $summary);
+  $newsItem.append($imgWrapper, $title, $summary, $a);
 
   return $newsItem;
 }
@@ -141,6 +147,12 @@ function observeLazyloadItems(items) {
     getRecentNews(num) {
       return this.getNews(1, num);
     }
+
+    getNewsById(id) {
+      const url = new URL(this.newsUrl.toString() + '/' + id);
+
+      return fetch(url).then((res) => res.json());
+    }
   }
 
   newsService = new NewsService();
@@ -149,13 +161,6 @@ function observeLazyloadItems(items) {
 (function () {
   const domObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (
-        !mutation.target.classList ||
-        !mutation.target.classList.contains('news__list')
-      ) {
-        return;
-      }
-
       if (mutation.addedNodes.length === 0) {
         return;
       }

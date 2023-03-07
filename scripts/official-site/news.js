@@ -49,6 +49,7 @@
         `https://loremflickr.com/90/140?lock=${page * limit + i}`,
         news.title,
         news.summary,
+        news.id,
       );
 
       $newsList.append($newItem);
