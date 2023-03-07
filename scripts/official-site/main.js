@@ -272,11 +272,13 @@
   $newsList.innerHTML = '';
 
   newsService.getRecentNews(4).then((newsList) => {
-    newsList.forEach((news) => {
+    newsList.forEach((news, i) => {
       const $newItem = createNewsItem(
-        'https://loremflickr.com/270/420?lock=1',
+        `https://loremflickr.com/270/420?lock=${i}`,
+        `https://loremflickr.com/90/140?lock=${i}`,
         news.title,
         news.summary,
+        news.id,
       );
 
       $newsList.append($newItem);
