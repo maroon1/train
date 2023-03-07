@@ -12,12 +12,13 @@ const animationObserver = new IntersectionObserver(
       if (!animation) {
         return;
       }
+      entry.target.classList.remove('invisible');
       entry.target.classList.add(animation);
       animationObserver.unobserve(entry.target);
     }
   },
   {
-    threshold: 0,
+    threshold: 0.25,
   },
 );
 
@@ -423,6 +424,7 @@ function observeAnimationItems(items) {
   }
 
   for (const item of items) {
+    item.classList.add('invisible');
     animationObserver.observe(item);
   }
 }
