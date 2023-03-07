@@ -29,9 +29,13 @@ const lazyloadObserver = new IntersectionObserver(
         return;
       }
 
-      const { lazy } = entry.target.dataset;
+      const { lazy, placeholder } = entry.target.dataset;
 
       entry.target.src = lazy;
+
+      if (placeholder) {
+        entry.target.classList.add(`bg-[url('${placeholder}')]`);
+      }
       lazyloadObserver.unobserve(entry.target);
     }
   },
@@ -42,18 +46,27 @@ const lazyloadObserver = new IntersectionObserver(
 );
 
 /**
- * @param {string} _image 新闻图片
+ * @param {string} image 新闻图片
  * @param {string} title 新闻标题
  * @param {string} summary 新闻概览
  */
-function createNewsItem(image, title, summary) {
+function createNewsItem(image, placeholderImage, title, summary) {
   const $img = document.createElement('img');
   $img.setAttribute('data-lazy', image);
+  $img.setAttribute('data-placeholder', placeholderImage);
   $img.setAttribute('alt', '新闻插图');
 
   const $imgWrapper = document.createElement('div');
-  $imgWrapper.classList.add('news__image', 'hover-scale');
+  $imgWrapper.classList.add(
+    'news__image',
+    'hover-scale',
+    'news__image--loading',
+  );
   $imgWrapper.append($img);
+
+  $img.onload = () => {
+    $imgWrapper.classList.remove('news__image--loading');
+  };
 
   const $title = document.createElement('h3');
   $title.classList.add('news__title', 'sm:text-lg');

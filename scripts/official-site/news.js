@@ -43,9 +43,10 @@
 
   newsService.getNews(page, limit).then((newsList) => {
     $newsList.innerHTML = '';
-    newsList.forEach((news) => {
+    newsList.forEach((news, i) => {
       const $newItem = createNewsItem(
-        'https://loremflickr.com/270/420?lock=1',
+        `https://loremflickr.com/270/420?lock=${page * limit + i}`,
+        `https://loremflickr.com/90/140?lock=${page * limit + i}`,
         news.title,
         news.summary,
       );
