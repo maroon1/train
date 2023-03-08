@@ -3,8 +3,9 @@
   const SPEED_MIN = 100;
   const SPEED_MAX = 350;
 
-  const FONT_SIZE_MIN = 12;
-  const FONT_SIZE_MAX = 36;
+  // 弹幕字体大小倍数，初始大小 12px
+  const FONT_SIZE_MIN = 1;
+  const FONT_SIZE_MAX = 3;
 
   /** @type {Set<JQuery<HTMLElement>>} */
   const bullets = new Set();
@@ -71,7 +72,7 @@
   }
 
   function getBullet(content) {
-    const { fontSize, duration, color, top } = getBulletConfig();
+    const { fontSizeScale, duration, color, top } = getBulletConfig();
 
     let bullet = bulletRecycle.pop();
 
@@ -81,16 +82,14 @@
       bullet = $(`<i class="text">${content}</i>`).appendTo($canvas);
     }
 
-    bullet
-      .css('font-size', fontSize)
-      .css('color', color)
-      .css('top', top)
-      .css('rightPosition', 0)
-      .text(content);
+    bullet.css('color', color).css('rightPosition', 0).text(content);
 
     const textWidth = bullet.innerWidth();
 
-    bullet.css('transform', `translate(${textWidth}px)`);
+    bullet.css(
+      'transform',
+      `scale3d(${fontSizeScale}, ${fontSizeScale}, 1) translate3d(${textWidth}px, ${top}px, 0px)`,
+    );
 
     return {
       target: bullet,
@@ -101,7 +100,12 @@
             duration,
             easing: 'linear',
             step(now) {
-              bullet.css('transform', `translateX(${textWidth - now}px)`);
+              bullet.css(
+                'transform',
+                `scale3d(${fontSizeScale}, ${fontSizeScale}, 1) translate3d(${
+                  textWidth - now
+                }px, ${top}px, 0px)`,
+              );
             },
             complete() {
               if (!$canvas.has(bullet.get()).length) {
@@ -119,14 +123,14 @@
   }
 
   function getBulletConfig() {
-    const fontSize = getFontSize();
+    const fontSizeScale = getFontSizeScale();
     const duration = getDuration();
     const color = getColor();
     // 高度需要减去字体大小，避免被画布底部遮挡
-    const top = getTop(canvasHeight - fontSize);
+    const top = getTop(canvasHeight - fontSizeScale);
 
     return {
-      fontSize,
+      fontSizeScale,
       duration,
       color,
       top,
@@ -148,7 +152,7 @@
    * 获取随机字体高度
    * @returns 字体高度
    */
-  function getFontSize() {
+  function getFontSizeScale() {
     return randomRange(FONT_SIZE_MIN, FONT_SIZE_MAX);
   }
 

@@ -119,6 +119,8 @@ a:target {
 .text {
   position: absolute;
   right: 0;
+  font-size: 12px;
   line-height: 1;
   white-space: nowrap;
+  transform-origin: top right;
 }
