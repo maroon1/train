@@ -1,0 +1,4 @@
+{
+  "src/**/*": "prettier --write --list-different --ignore-unknown",
+  "src/**/*.{j,t}s?(x)": "eslint --fix --ext .js"
+}
