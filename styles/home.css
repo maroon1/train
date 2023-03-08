@@ -50,12 +50,14 @@ a:target {
 html,
 body {
   height: 100%;
+  overflow: auto;
 }
 
 /* #region 布局 */
 .layout {
   display: flex;
   flex-direction: column;
+  min-width: 1200px;
   min-height: 100%;
 }
 
