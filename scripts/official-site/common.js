@@ -40,12 +40,17 @@ const lazyloadObserver = new IntersectionObserver(
   },
 );
 
-function createLazyloadImage(image, placeholderImage, alt, srcset) {
+function createLazyloadImage(image, placeholderImage, alt, srcset, sizes) {
   const $img = document.createElement('img');
   $img.setAttribute('data-lazy', image);
   if (srcset) {
     $img.setAttribute('data-srcset', srcset);
   }
+
+  if (sizes) {
+    $img.setAttribute('sizes', sizes);
+  }
+
   $img.setAttribute('data-placeholder', placeholderImage);
   $img.setAttribute('alt', alt);
 

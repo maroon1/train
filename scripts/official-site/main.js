@@ -19,14 +19,14 @@
   const bannerInfos = [
     {
       image: './assets/official-site/banner1-lg.jpg',
-      imageSet: './assets/official-site/banner1.jpg 500w',
+      imageSet: './assets/official-site/banner1.jpg 800w, ./assets/official-site/banner1-lg.jpg 1200w',
       imagePlaceholder: './assets/official-site/banner1-xs.jpg',
       title: '开启互联网+ 从我们开始',
       description: '域名主机，网站建设，云服务器，企业邮箱一站式解决',
     },
     {
       image: './assets/official-site/banner2-lg.jpg',
-      imageSet: './assets/official-site/banner2.jpg 500w',
+      imageSet: './assets/official-site/banner2.jpg 800w, ./assets/official-site/banner2-lg.jpg 1200w',
       imagePlaceholder: './assets/official-site/banner2-xs.jpg',
       title: '新闻中心',
       description:
@@ -34,7 +34,7 @@
     },
     {
       image: './assets/official-site/banner3-lg.jpg',
-      imageSet: './assets/official-site/banner3.jpg 500w',
+      imageSet: './assets/official-site/banner3.jpg 800w, ./assets/official-site/banner3-lg.jpg 1200w',
       imagePlaceholder: './assets/official-site/banner3-xs.jpg',
       title: '关于我们',
       description:
@@ -177,6 +177,7 @@
       banner.imagePlaceholder,
       '横幅',
       banner.imageSet,
+      "100vw"
     );
     $carouselImage.classList.add('carousel__image');
 

@@ -43,7 +43,8 @@
       `https://loremflickr.com/1200/675?lock=${newsId}-${type}`,
       `https://loremflickr.com/320/180?lock=${newsId}-${type}`,
       '新闻插图',
-      `https://loremflickr.com/800/450?lock=${newsId}-${type} 500w`,
+      `https://loremflickr.com/800/450?lock=${newsId}-${type} 800w, https://loremflickr.com/1200/675?lock=${newsId}-${type} 1200w`,
+      '100vw'
     );
 
     return $img;
