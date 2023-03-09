@@ -1,21 +1,12 @@
+import styles from "./grid.module.scss";
+
 export function Grid(props) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-        margin: "0 -8px",
-      }}
-    >
-      {props.children}
-    </div>
-  );
+  return <div className={styles.grid}>{props.children}</div>;
 }
 
 export function Col(props) {
   return (
-    <div style={{ flex: "none", width: props.width, padding: 8 }}>
+    <div className={styles.col} style={{ width: props.width }}>
       {props.children}
     </div>
   );

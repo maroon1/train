@@ -1,0 +1,21 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-width: 1200px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+.content {
+  flex: auto;
+  width: 1000px;
+  min-height: 0;
+  margin: 0 auto;
+  overflow: auto;
+}

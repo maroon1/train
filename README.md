@@ -15,3 +15,4 @@ LF
 1. `css-loader` 模式支持 CSS Module，只要使用 `xxx.module.css` 来命名需要模块化的 CSS 文件
 1. 新版 Sass 已经弃用 `node-sass`，使用更高性能的 `dart-sass` 来解析
 1. `optimize-css-assets-webpack-plugin` 不支持 Webpack 5+，需要使用 `css-minimizer-webpack-plugin`
+1. 目前 CSS in JS 的方案非常成熟了，可以补充 CSS in JS 的相关内容

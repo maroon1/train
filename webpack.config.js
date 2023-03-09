@@ -1,27 +1,27 @@
-const path = require('path');
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const path = require("path");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 /**
  * @return {import('webpack').Configuration}
  */
 function setConfig(env, argv) {
-  const isDevelopment = argv.mode === 'development' || !argv.mode;
-  const isProduction = argv.mode === 'production';
+  const isDevelopment = argv.mode === "development" || !argv.mode;
+  const isProduction = argv.mode === "production";
 
   return {
-    target: 'web',
-    mode: isProduction ? 'production' : isDevelopment && 'development',
+    target: "web",
+    mode: isProduction ? "production" : isDevelopment && "development",
     devtool: isProduction
-      ? 'source-map'
-      : isDevelopment && 'cheap-module-source-map',
+      ? "source-map"
+      : isDevelopment && "cheap-module-source-map",
     entry: {
-      main: './src/index.js',
+      main: "./src/index.js",
     },
     output: {
-      filename: '[name].js',
-      path: path.resolve(__dirname, 'dist'),
+      filename: "[name].js",
+      path: path.resolve(__dirname, "dist"),
     },
     devServer: {
       hot: true,
@@ -34,9 +34,9 @@ function setConfig(env, argv) {
         {
           test: /\.jsx?$/,
           use: {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              plugins: [isDevelopment && require('react-refresh/babel')].filter(
+              plugins: [isDevelopment && require("react-refresh/babel")].filter(
                 Boolean,
               ),
             },
@@ -44,19 +44,42 @@ function setConfig(env, argv) {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: [
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                modules: {
+                  localIdentName: "[path][name]__[local]",
+                },
+              },
+            },
+            "postcss-loader",
+          ],
         },
         {
           test: /\.s[a,c]ss$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+          use: [
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                modules: {
+                  localIdentName: "[path][name]__[local]",
+                },
+              },
+            },
+            "postcss-loader",
+            "sass-loader",
+          ],
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: ['file-loader'],
+          use: ["file-loader"],
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
           },
@@ -66,15 +89,15 @@ function setConfig(env, argv) {
     plugins: [
       isDevelopment && new ReactRefreshWebpackPlugin(),
       new HtmlWebpackPlugin({
-        filename: './index.html',
-        template: 'public/index.html',
+        filename: "./index.html",
+        template: "public/index.html",
       }),
       new ESLintWebpackPlugin(),
     ].filter(Boolean),
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: [".js", ".jsx"],
       alias: {
-        '@': path.resolve('src/app'),
+        "@": path.resolve("src/app"),
       },
     },
   };

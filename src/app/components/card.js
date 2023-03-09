@@ -1,5 +1,5 @@
-import { ellipsis, primaryColor } from "../constants";
 import { formatNumber } from "../utils";
+import styles from "./card.module.scss";
 import { FontAwesomeIcon } from "./icon";
 
 export function Card(props) {
@@ -36,71 +36,37 @@ export function Card(props) {
 }
 
 function CardContainer(props) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        border: "1px solid rgba(0, 0, 0, 0.5)",
-        borderRadius: 4,
-        padding: "16px 32px",
-      }}
-    >
-      {props.children}
-    </div>
-  );
+  return <div className={styles["card-container"]}>{props.children}</div>;
 }
 
 function Rank(props) {
-  return <div style={{ fontSize: 32 }}>#{props.value}</div>;
+  return <div className={styles.rank}>#{props.value}</div>;
 }
 
 function Avatar(props) {
-  return (
-    <img
-      style={{
-        width: 80,
-        height: 80,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        objectFit: "cover",
-      }}
-      src={props.src}
-      alt="头像"
-    />
-  );
+  return <img className={styles.avatar} src={props.src} alt="头像" />;
 }
 
 function ProjectName(props) {
   return (
-    <div
-      style={{
-        marginTop: 16,
-        fonsSize: 24,
-        fonstWeight: "bold",
-        color: primaryColor,
-        textAlign: "center",
-        ...ellipsis,
-      }}
-    >
+    <div className={styles["project-name"]}>
       <a href={props.href}>{props.children}</a>
     </div>
   );
 }
 
 function ProjectDetails(props) {
-  return <dl style={{ width: "100%" }}>{props.children}</dl>;
+  return <dl className={styles["project-details"]}>{props.children}</dl>;
 }
 
 function ProjectDetailsItem(props) {
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div className={styles["project-details-item-wrapper"]}>
       <dt>{props.icon}</dt>
       <dd
+        className={styles["project-details-data"]}
         style={{
           fontWeight: props.emphasis ? "bold" : "normal",
-          marginLeft: 8,
-          ...ellipsis,
         }}
       >
         {props.children}

@@ -1,4 +1,4 @@
-import { primaryColor } from "../constants";
+import styles from "./filter.module.scss";
 
 export function Filter(props) {
   const languages = [
@@ -10,7 +10,7 @@ export function Filter(props) {
   ];
 
   return (
-    <ul style={{ display: "flex", alignItems: "center", margin: 16 }}>
+    <ul className={styles.filter}>
       <FilterItem active={!props.value} onClick={() => props.onChange()}>
         All
       </FilterItem>
@@ -30,11 +30,10 @@ export function Filter(props) {
 export function FilterItem(props) {
   return (
     <li
-      style={{
-        padding: "0 8px",
-        cursor: "pointer",
-        color: props.active ? primaryColor : undefined,
-      }}
+      className={
+        styles["filter-item"] +
+        (props.active ? ` ${styles["filter-item-active"]}` : "")
+      }
       onClick={props.onClick}
     >
       {props.children}

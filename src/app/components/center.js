@@ -1,13 +1,8 @@
+import styles from "./center.module.scss";
+
 export function Center(props) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        ...props.style,
-      }}
-    >
+    <div className={styles.center} style={props.style}>
       {props.children}
     </div>
   );

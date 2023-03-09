@@ -1,12 +1,12 @@
+import styles from "./icon.module.scss";
+
 export function FontAwesomeIcon(props) {
   const size = props.size || 16;
 
   return (
     <div
+      className={styles.icon}
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         width: size,
         height: size,
         color: props.color,

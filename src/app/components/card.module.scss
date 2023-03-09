@@ -1,0 +1,47 @@
+@use "./utils" as *;
+@use "./variables" as *;
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 16px 32px;
+}
+
+.rank {
+  font-size: 32px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.7);
+  object-fit: cover;
+}
+
+.project-name {
+  @include ellipsis;
+
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  color: $primary-color;
+  text-align: center;
+}
+
+.project-details {
+  width: 100%;
+}
+
+.project-details-item-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.project-details-data {
+  @include ellipsis;
+
+  margin-left: 8;
+}
