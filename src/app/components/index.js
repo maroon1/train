@@ -5,4 +5,5 @@ export * from "./filter";
 export * from "./grid";
 export * from "./icon";
 export * from "./layout";
+export * from "./loader";
 export * from "./utils";

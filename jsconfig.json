@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2020"
+    "target": "es2020",
+    "baseUrl": "./src",
+    "paths": {
+      "@/components": ["app/components/index.js"]
+    }
   },
   "typeAcquisition": {
     "include": ["jquery"]

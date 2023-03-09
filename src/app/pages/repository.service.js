@@ -1,9 +1,7 @@
 export class RepositoryService {
-  api = new URL(
-    "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&type=Repositories"
-  );
+  api = new URL("https://api.github.com/search/repositories");
 
-  cachelife = 0;
+  cachelife = 10000;
 
   getRepositories(params) {
     const cache = this.getCache(params);
@@ -14,7 +12,14 @@ export class RepositoryService {
 
     const url = new URL(this.api);
 
-    Object.entries(params).forEach(([key, value]) => {
+    const { language, ...restParams } = params;
+
+    url.searchParams.set("q", `stars:>1 language:${language}`);
+    url.searchParams.set("sort", "stars");
+    url.searchParams.set("order", "desc");
+    url.searchParams.set("type", "Repositories");
+
+    Object.entries(restParams).forEach(([key, value]) => {
       url.searchParams.set(key, value);
     });
 
@@ -27,9 +32,9 @@ export class RepositoryService {
         throw res;
       })
       .then((data) => {
-        this.setCache(params, data.items);
+        this.setCache(params, data);
 
-        return data.items;
+        return data;
       });
   }
 
@@ -41,7 +46,7 @@ export class RepositoryService {
       JSON.stringify({
         timestamp: Date.now(),
         data,
-      })
+      }),
     );
   }
 

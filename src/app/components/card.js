@@ -79,6 +79,7 @@ function ProjectName(props) {
         fonsSize: 24,
         fonstWeight: "bold",
         color: primaryColor,
+        textAlign: "center",
         ...ellipsis,
       }}
     >

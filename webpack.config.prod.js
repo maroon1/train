@@ -3,7 +3,7 @@ const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 /**
@@ -27,7 +27,7 @@ function setConfig(env, argv) {
     },
     optimization: {
       minimize: true,
-      minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
+      minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
