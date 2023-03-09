@@ -1,4 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+
+import "normalize.css/normalize.css";
+
+import { service } from "./repository.service";
+import { catchGithubRateLimitError } from "./utils";
+
+import "./index.css";
+
 import {
   Button,
   Card,
@@ -10,9 +18,7 @@ import {
   Header,
   Layout,
   Loading,
-} from "./components";
-import { service } from "./repository.service";
-import { catchGithubRateLimitError } from "./utils";
+} from "@/components";
 
 export function App() {
   const [language] = useState(
@@ -71,9 +77,9 @@ export function App() {
 
         if (!message) {
           console.error(err);
-          alert("发生未知错误，请重试");
+          // alert("发生未知错误，请重试");
         } else {
-          alert(message);
+          // alert(message);
         }
       })
       .finally(() => {

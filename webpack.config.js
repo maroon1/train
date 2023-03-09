@@ -1,5 +1,7 @@
 const path = require('path');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 /**
  * @return {import('webpack').Configuration}
@@ -9,29 +11,72 @@ function setConfig(env, argv) {
   const isProduction = argv.mode === 'production';
 
   return {
+    target: 'web',
     mode: isProduction ? 'production' : isDevelopment && 'development',
     devtool: isProduction
       ? 'source-map'
       : isDevelopment && 'cheap-module-source-map',
-    entry: './src/index.js',
+    entry: {
+      main: './src/index.js',
+    },
     output: {
-      filename: 'bundle.js',
+      filename: '[name].js',
       path: path.resolve(__dirname, 'dist'),
     },
-    devServer: {},
+    devServer: {
+      hot: true,
+      client: {
+        overlay: false,
+      },
+    },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
-          use: 'babel-loader',
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: [isDevelopment && require('react-refresh/babel')].filter(
+                Boolean,
+              ),
+            },
+          },
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
+        },
+        {
+          test: /\.s[a,c]ss$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          use: ['file-loader'],
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          },
         },
       ],
     },
     plugins: [
+      isDevelopment && new ReactRefreshWebpackPlugin(),
       new HtmlWebpackPlugin({
+        filename: './index.html',
         template: 'public/index.html',
       }),
-    ],
+      new ESLintWebpackPlugin(),
+    ].filter(Boolean),
+    resolve: {
+      extensions: ['.js', '.jsx'],
+      alias: {
+        '@': path.resolve('src/app'),
+      },
+    },
   };
 }
 
