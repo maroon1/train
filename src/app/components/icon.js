@@ -1,6 +1,6 @@
 import styles from "./icon.module.scss";
 
-export function FontAwesomeIcon(props) {
+export function Icon(props) {
   const size = props.size || 16;
 
   return (
@@ -13,7 +13,7 @@ export function FontAwesomeIcon(props) {
         fontSize: size,
       }}
     >
-      <i className={`fa-solid fa-${props.name} ${props.className}`} />
+      <i className={`fa-solid fa-${props.name} ${props.className || ""}`} />
     </div>
   );
 }

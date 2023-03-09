@@ -1,5 +1,5 @@
 import { Center } from "./center";
-import { FontAwesomeIcon } from "./icon";
+import { Icon } from "./icon";
 
 export function Empty(props) {
   return (
@@ -12,7 +12,7 @@ export function Empty(props) {
 export function Loading() {
   return (
     <Center style={{ height: 200 }}>
-      <FontAwesomeIcon size={48} name="spinner" className="fa-spin-pulse" />
+      <Icon size={48} name="spinner" className="fa-spin-pulse" />
     </Center>
   );
 }

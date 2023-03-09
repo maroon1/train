@@ -38,10 +38,12 @@
 .project-details-item-wrapper {
   display: flex;
   align-items: center;
+  margin: 8px;
 }
 
 .project-details-data {
   @include ellipsis;
 
-  margin-left: 8;
+  margin-left: 16px;
+  margin-bottom: 0;
 }

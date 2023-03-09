@@ -4,9 +4,13 @@ import "./index.css";
 
 import { App as AntdApp, ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Battle, Popular } from "./pages";
+import { Popular } from "./pages";
+
+const Battle = lazy(() => import("./pages/battle"));
+const BattleResult = lazy(() => import("./pages/battle-result"));
 
 const router = createBrowserRouter([
   {
@@ -15,7 +19,29 @@ const router = createBrowserRouter([
   },
   {
     path: "battle",
-    element: <Battle />,
+    element: (
+      <Suspense>
+        <Battle />
+      </Suspense>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense>
+            <Battle />
+          </Suspense>
+        ),
+      },
+      {
+        path: "result",
+        element: (
+          <Suspense>
+            <BattleResult />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);
 

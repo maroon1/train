@@ -7,6 +7,7 @@ import { catchGithubRateLimitError } from "../utils";
 import { service } from "./repository.service";
 
 import {
+  BattleLink,
   Card,
   Col,
   Content,
@@ -117,6 +118,7 @@ export function Popular() {
             setSearchParams(newSearchParams);
           }}
         />
+        <BattleLink to="/battle" />
       </Header>
       <Content>
         {loading && <Loading />}

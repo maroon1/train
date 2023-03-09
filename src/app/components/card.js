@@ -1,6 +1,6 @@
 import { formatNumber } from "../utils";
 import styles from "./card.module.scss";
-import { FontAwesomeIcon } from "./icon";
+import { Icon } from "./icon";
 
 export function Card(props) {
   return (
@@ -9,24 +9,17 @@ export function Card(props) {
       <Avatar src={props.avatar} />
       <ProjectName href={props.url}>{props.name}</ProjectName>
       <ProjectDetails>
-        <ProjectDetailsItem
-          icon={<FontAwesomeIcon name="user" color="orange" />}
-          emphasis
-        >
+        <ProjectDetailsItem icon={<Icon name="user" color="orange" />} emphasis>
           {props.username}
         </ProjectDetailsItem>
-        <ProjectDetailsItem
-          icon={<FontAwesomeIcon name="star" color="yellow" />}
-        >
+        <ProjectDetailsItem icon={<Icon name="star" color="yellow" />}>
           {formatNumber(props.stars)} stars
         </ProjectDetailsItem>
-        <ProjectDetailsItem
-          icon={<FontAwesomeIcon name="code-fork" color="#1f74e7" />}
-        >
+        <ProjectDetailsItem icon={<Icon name="code-fork" color="#1f74e7" />}>
           {formatNumber(props.forks)} forks
         </ProjectDetailsItem>
         <ProjectDetailsItem
-          icon={<FontAwesomeIcon name="triangle-exclamation" color="#f14c4c" />}
+          icon={<Icon name="triangle-exclamation" color="#f14c4c" />}
         >
           {formatNumber(props.issues)} open issues
         </ProjectDetailsItem>

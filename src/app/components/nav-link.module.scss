@@ -1,0 +1,18 @@
+.nav-link {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.nav-link-text {
+  margin: 0 8px;
+}
+
+.battle-link {
+  right: 0;
+}
+
+.popular-link {
+  left: 0;
+}

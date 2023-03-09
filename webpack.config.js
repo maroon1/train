@@ -28,6 +28,7 @@ function setConfig(env, argv) {
       client: {
         overlay: false,
       },
+      historyApiFallback: true,
     },
     module: {
       rules: [
