@@ -19,3 +19,4 @@ LF
 1. `optimize-css-assets-webpack-plugin` 不支持 Webpack 5+，需要使用 `css-minimizer-webpack-plugin`
 1. 目前 CSS in JS 的方案非常成熟了，可以补充 CSS in JS 的相关内容
 1. 使用 `<base href="/">` 标签代替 `publicPath`，`base` 标签是全局的，比如路由地址，CSS 内的地址等，都会遵循 `base` 的 `href` 属性
+1. 使用 monorepo 来管理项目
