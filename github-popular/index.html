@@ -19,22 +19,33 @@
     ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script type="text/babel">
-      const primaryColor = '#61dafb';
+      const primaryColor = "#61dafb";
       const ellipsis = {
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
       };
 
       class RepositoryService {
-        api = new URL(
-          'https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&type=Repositories',
-        );
+        api = new URL("https://api.github.com/search/repositories");
 
-        cachelife = 0;
+        cachelife = 10000;
 
         getRepositories(params) {
-          const cache = this.getCache(params);
+          const newUrl = new URL(this.api);
+
+          const { language, ...restParams } = params;
+
+          newUrl.searchParams.set("q", `stars:>1 language:${language}`);
+          newUrl.searchParams.set("sort", "stars");
+          newUrl.searchParams.set("order", "desc");
+          newUrl.searchParams.set("type", "Repositories");
+
+          Object.entries(restParams).forEach(([key, value]) => {
+            newUrl.searchParams.set(key, value);
+          });
+
+          const cache = this.getCache(newUrl.toString());
 
           if (cache != null) {
             return Promise.resolve(cache);
@@ -43,10 +54,10 @@
           const url = new URL(this.api);
 
           Object.entries(params).forEach(([key, value]) => {
-            url.searchParams.set(key, value);
+            newUrl.searchParams.set(key, value);
           });
 
-          return fetch(url)
+          return fetch(newUrl)
             .then((res) => {
               if (res.ok) {
                 return res.json();
@@ -55,15 +66,13 @@
               throw res;
             })
             .then((data) => {
-              this.setCache(params, data.items);
+              this.setCache(newUrl.toString(), data.items);
 
               return data.items;
             });
         }
 
-        setCache(params, data) {
-          const cacheKey = this.getCacheKey(params);
-
+        setCache(cacheKey, data) {
           window.localStorage.setItem(
             cacheKey,
             JSON.stringify({
@@ -73,9 +82,7 @@
           );
         }
 
-        getCache(params) {
-          const cacheKey = this.getCacheKey(params);
-
+        getCache(cacheKey) {
           const cache = window.localStorage.getItem(cacheKey);
 
           if (!cache) {
@@ -86,11 +93,11 @@
             const result = JSON.parse(cache);
 
             if (Date.now() - result.timestamp > this.cachelife) {
-              console.log('缓存未命中');
+              console.log("缓存未命中");
               return null;
             }
 
-            console.log('缓存命中');
+            console.log("缓存命中");
             console.log(result.data);
 
             return result.data;
@@ -113,7 +120,7 @@
 
       function App() {
         const url = new URL(window.location.href);
-        const [language] = React.useState(url.searchParams.get('language'));
+        const [language] = React.useState(url.searchParams.get("language"));
         const [loading, setLoading] = React.useState(true);
         const [loadingMore, setLoadingMore] = React.useState(false);
         const [projects, setProjects] = React.useState([]);
@@ -167,7 +174,7 @@
 
               if (!message) {
                 console.error(err);
-                alert('发生未知错误，请重试');
+                alert("发生未知错误，请重试");
               } else {
                 alert(message);
               }
@@ -186,9 +193,9 @@
                   const url = new URL(window.location.href);
 
                   if (value) {
-                    url.searchParams.set('language', value);
+                    url.searchParams.set("language", value);
                   } else {
-                    url.searchParams.delete('language');
+                    url.searchParams.delete("language");
                   }
 
                   window.location.href = url.toString();
@@ -201,9 +208,9 @@
               ) : errorOccurred ? (
                 <Empty
                   message={
-                    typeof errorOccurred === 'string'
+                    typeof errorOccurred === "string"
                       ? errorOccurred
-                      : '发生未知错误，请刷新页面重试'
+                      : "发生未知错误，请刷新页面重试"
                   }
                 />
               ) : (
@@ -227,10 +234,10 @@
               {!loading && !errorOccurred && (
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '16px 0',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "16px 0",
                   }}
                 >
                   <Button loading={loadingMore} onClick={onLoadMore}>
@@ -245,13 +252,13 @@
 
       function catchGithubRateLimitError(res) {
         if (res instanceof Response) {
-          if (!res.headers.has('x-ratelimit-remaining')) {
+          if (!res.headers.has("x-ratelimit-remaining")) {
             return false;
           }
 
-          if (res.headers.get('x-ratelimit-remaining') === '0') {
+          if (res.headers.get("x-ratelimit-remaining") === "0") {
             const error = `慢一点，请求太频繁了，${Math.ceil(
-              (res.headers.get('x-ratelimit-reset') * 1000 - Date.now()) / 1000,
+              (res.headers.get("x-ratelimit-reset") * 1000 - Date.now()) / 1000,
             )}秒后重试`;
 
             return error;
@@ -262,17 +269,17 @@
       }
 
       function formatNumber(num) {
-        return Intl.NumberFormat('en-US', { style: 'decimal' }).format(num);
+        return Intl.NumberFormat("en-US", { style: "decimal" }).format(num);
       }
 
       function Layout(props) {
         return (
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               minWidth: 1200,
-              height: '100%',
+              height: "100%",
             }}
           >
             {props.children}
@@ -284,10 +291,10 @@
         return (
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottom: '1px solid rgba(0, 0, 0, 0.9)',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.9)",
             }}
           >
             {props.children}
@@ -299,11 +306,11 @@
         return (
           <div
             style={{
-              flex: 'auto',
+              flex: "auto",
               width: 1000,
               minHeight: 0,
-              margin: '0 auto',
-              overflow: 'auto',
+              margin: "0 auto",
+              overflow: "auto",
             }}
           >
             {props.children}
@@ -313,15 +320,15 @@
 
       function Filter(props) {
         const languages = [
-          { value: 'javascript', title: 'Javascript' },
-          { value: 'ruby', title: 'Ruby' },
-          { value: 'java', title: 'Java' },
-          { value: 'css', title: 'CSS' },
-          { value: 'python', title: 'Python' },
+          { value: "javascript", title: "Javascript" },
+          { value: "ruby", title: "Ruby" },
+          { value: "java", title: "Java" },
+          { value: "css", title: "CSS" },
+          { value: "python", title: "Python" },
         ];
 
         return (
-          <ul style={{ display: 'flex', alignItems: 'center', margin: 16 }}>
+          <ul style={{ display: "flex", alignItems: "center", margin: 16 }}>
             <FilterItem active={!props.value} onClick={() => props.onChange()}>
               All
             </FilterItem>
@@ -342,8 +349,8 @@
         return (
           <li
             style={{
-              padding: '0 8px',
-              cursor: 'pointer',
+              padding: "0 8px",
+              cursor: "pointer",
               color: props.active ? primaryColor : undefined,
             }}
             onClick={props.onClick}
@@ -357,10 +364,10 @@
         return (
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-              margin: '0 -8px',
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+              margin: "0 -8px",
             }}
           >
             {props.children}
@@ -370,7 +377,7 @@
 
       function Col(props) {
         return (
-          <div style={{ flex: 'none', width: props.width, padding: 8 }}>
+          <div style={{ flex: "none", width: props.width, padding: 8 }}>
             {props.children}
           </div>
         );
@@ -424,8 +431,8 @@
             style={{
               width: 80,
               height: 80,
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              objectFit: 'cover',
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              objectFit: "cover",
             }}
             src={props.src}
             alt="头像"
@@ -439,7 +446,7 @@
             style={{
               marginTop: 16,
               fonsSize: 24,
-              fonstWeight: 'bold',
+              fonstWeight: "bold",
               color: primaryColor,
               ...ellipsis,
             }}
@@ -450,16 +457,16 @@
       }
 
       function ProjectDetails(props) {
-        return <dl style={{ width: '100%' }}>{props.children}</dl>;
+        return <dl style={{ width: "100%" }}>{props.children}</dl>;
       }
 
       function ProjectDetailsItem(props) {
         return (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <dt>{props.icon}</dt>
             <dd
               style={{
-                fontWeight: props.emphasis ? 'bold' : 'normal',
+                fontWeight: props.emphasis ? "bold" : "normal",
                 marginLeft: 8,
                 ...ellipsis,
               }}
@@ -476,9 +483,9 @@
         return (
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               width: size,
               height: size,
               color: props.color,
@@ -494,12 +501,12 @@
         return (
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              border: '1px solid rgba(0, 0, 0, 0.5)',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              border: "1px solid rgba(0, 0, 0, 0.5)",
               borderRadius: 4,
-              padding: '16px 32px',
+              padding: "16px 32px",
             }}
           >
             {props.children}
@@ -513,16 +520,16 @@
         return (
           <button
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              display: "flex",
+              alignItems: "center",
               minWidth: 48,
-              border: '1px solid rgba(0, 0, 0, 0.6)',
+              border: "1px solid rgba(0, 0, 0, 0.6)",
               borderRadius: 8,
-              padding: '8px 16px',
+              padding: "8px 16px",
               fontSize: 14,
-              color: '#000',
+              color: "#000",
               backgroundColor: primaryColor,
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
             {...restProps}
           >
@@ -540,9 +547,9 @@
         return (
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               ...props.style,
             }}
           >
@@ -571,7 +578,7 @@
         );
       }
 
-      ReactDOM.render(<App />, document.getElementById('container'));
+      ReactDOM.render(<App />, document.getElementById("container"));
     </script>
     <script
       src="https://kit.fontawesome.com/bb2fa05758.js"
