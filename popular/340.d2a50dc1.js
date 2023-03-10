@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunklf_training=self.webpackChunklf_training||[]).push([[340],{5340:(n,e,r)=>{r.r(e),r.d(e,{default:()=>i});var t=r(5741),a=r(9905),s=r(2970),u=r(515);function i(){var n=(0,a.useState)({}),e=(0,t.Z)(n,2),r=e[0],i=e[1];return(0,u.jsxs)(u.Fragment,{children:[(0,u.jsx)(s.td,{players:r}),(0,u.jsx)(s.dQ,{onChange:function(n){return i(n)}})]})}}}]);
-//# sourceMappingURL=340.d2a50dc1.js.map
