@@ -6,7 +6,8 @@
   "scripts": {
     "prepare": "husky install",
     "start": "webpack serve --mode development --hot",
-    "build": "webpack --config webpack.config.prod.js --mode production"
+    "build": "webpack --config webpack.config.prod.js --mode production",
+    "deploy": "gh-pages -d static/; gh-pages -d dist/ -e popular/"
   },
   "keywords": [],
   "author": "maroon1",
@@ -35,6 +36,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "eslint": "^8.35.0",

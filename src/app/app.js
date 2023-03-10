@@ -5,14 +5,14 @@ import "./index.css";
 import { App as AntdApp, ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { Battle, Popular } from "./pages";
 
 const BattlePlayer = lazy(() => import("./pages/battle-player"));
 const BattleResult = lazy(() => import("./pages/battle-result"));
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Popular />,

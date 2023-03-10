@@ -1,4 +1,5 @@
 const path = require("path");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -24,7 +25,6 @@ function setConfig(env, argv) {
     output: {
       filename: "[name].[contenthash:8].js",
       path: path.resolve(__dirname, "dist"),
-      publicPath: "/",
     },
     optimization: {
       minimize: true,
@@ -80,9 +80,11 @@ function setConfig(env, argv) {
       ],
     },
     plugins: [
+      new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: "./index.html",
         template: "public/index.html",
+        base: '/train/popular/',
         minify: {
           removeComments: true,
           collapseWhitespace: true,
