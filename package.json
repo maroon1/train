@@ -7,7 +7,9 @@
     "prepare": "husky install",
     "start": "webpack serve --mode development --hot",
     "build": "webpack --config webpack.config.prod.js --mode production",
-    "deploy": "gh-pages -d static/; gh-pages -d dist/ -e popular/"
+    "deploy:static": "gh-pages -d static/",
+    "deploy:popular": "gh-pages -d dist/ -e popular/",
+    "deploy": "pnpm deploy:static; pnpm deploy:popular"
   },
   "keywords": [],
   "author": "maroon1",
