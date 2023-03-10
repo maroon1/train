@@ -2,6 +2,8 @@
 
 LF
 
+1. 希望有专门的页面设计稿
+1. 提供脚手架工具
 1. NPM 淘宝镜像地址错误 `http://npm.taobao.org/` -> `https://npmmirror.com/`
 1. 使用 `npm config set registry="https://npmmirror.com/" -g` 代替 `cnpm` 的建议
 1. `babel-eslint` 已经弃用，改用 `[@babel/eslint-parser](https://www.npmjs.com/package/@babel/eslint-parser)`
@@ -16,3 +18,4 @@ LF
 1. 新版 Sass 已经弃用 `node-sass`，使用更高性能的 `dart-sass` 来解析
 1. `optimize-css-assets-webpack-plugin` 不支持 Webpack 5+，需要使用 `css-minimizer-webpack-plugin`
 1. 目前 CSS in JS 的方案非常成熟了，可以补充 CSS in JS 的相关内容
+1. 使用 `<base href="/">` 标签代替 `publicPath`，`base` 标签是全局的，比如路由地址，CSS 内的地址等，都会遵循 `base` 的 `href` 属性
