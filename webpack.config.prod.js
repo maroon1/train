@@ -1,47 +1,48 @@
-const path = require('path');
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 /**
  * @return {import('webpack').Configuration}
  */
 function setConfig(env, argv) {
-  const isDevelopment = argv.mode === 'development' || !argv.mode;
-  const isProduction = argv.mode === 'production';
+  const isDevelopment = argv.mode === "development" || !argv.mode;
+  const isProduction = argv.mode === "production";
 
   return {
-    mode: isProduction ? 'production' : isDevelopment && 'development',
+    mode: isProduction ? "production" : isDevelopment && "development",
     devtool: isProduction
-      ? 'source-map'
-      : isDevelopment && 'cheap-module-source-map',
+      ? "source-map"
+      : isDevelopment && "cheap-module-source-map",
     entry: {
-      main: './src/index.js',
+      main: "./src/index.js",
     },
     output: {
-      filename: '[name].[contenthash:8].js',
-      path: path.resolve(__dirname, 'dist'),
+      filename: "[name].[contenthash:8].js",
+      path: path.resolve(__dirname, "dist"),
+      publicPath: "/",
     },
     optimization: {
       minimize: true,
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
       splitChunks: {
-        chunks: 'all',
+        chunks: "all",
         cacheGroups: {
           defaultVendors: {
             test: /[\\/]node_modules[\\/]/,
             priority: -10,
             reuseExistingChunk: true,
-            name: 'vendor',
+            name: "vendor",
           },
           default: {
             minChunks: 2,
             priority: -20,
             reuseExistingChunk: true,
-            name: 'main',
+            name: "main",
           },
         },
       },
@@ -50,28 +51,28 @@ function setConfig(env, argv) {
       rules: [
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+          use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
         },
         {
           test: /\.s[a,c]ss$/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
-            'postcss-loader',
-            'sass-loader',
+            "css-loader",
+            "postcss-loader",
+            "sass-loader",
           ],
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: ['file-loader'],
+          use: ["file-loader"],
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
           },
@@ -80,8 +81,8 @@ function setConfig(env, argv) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        filename: './index.html',
-        template: 'public/index.html',
+        filename: "./index.html",
+        template: "public/index.html",
         minify: {
           removeComments: true,
           collapseWhitespace: true,
@@ -97,15 +98,15 @@ function setConfig(env, argv) {
       }),
       new ESLintWebpackPlugin(),
       new MiniCssExtractPlugin({
-        filename: '[name].[contenthash:8].css',
-        chunkFilename: '[name].[contenthash:8].chunk.css',
+        filename: "[name].[contenthash:8].css",
+        chunkFilename: "[name].[contenthash:8].chunk.css",
       }),
       new BundleAnalyzerPlugin(),
     ],
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: [".js", ".jsx"],
       alias: {
-        '@': path.resolve('src/app'),
+        "@": path.resolve("src/app"),
       },
     },
   };

@@ -1,0 +1,46 @@
+@use "../variables" as *;
+
+.panels {
+  display: flex;
+  justify-content: center;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px;
+  width: 240px;
+  padding: 16px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.score {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.username {
+  font-size: 24px;
+}
+
+.username a {
+  color: $primary-color;
+}

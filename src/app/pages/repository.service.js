@@ -1,15 +1,13 @@
+import { cacheService } from "./cache.service";
+
 export class RepositoryService {
   api = new URL("https://api.github.com/search/repositories");
 
-  cachelife = 10000;
+  constructor(cache) {
+    this.cacheService = cache;
+  }
 
   getRepositories(params) {
-    const cache = this.getCache(params);
-
-    if (cache != null) {
-      return Promise.resolve(cache);
-    }
-
     const url = new URL(this.api);
 
     const { language, ...restParams } = params;
@@ -23,6 +21,12 @@ export class RepositoryService {
       url.searchParams.set(key, value);
     });
 
+    const cache = this.cacheService.getCache(url.toString());
+
+    if (cache != null) {
+      return Promise.resolve(cache);
+    }
+
     return fetch(url)
       .then((res) => {
         if (res.ok) {
@@ -32,58 +36,11 @@ export class RepositoryService {
         throw res;
       })
       .then((data) => {
-        this.setCache(params, data);
+        this.cacheService.setCache(url.toString(), data);
 
         return data;
       });
   }
-
-  setCache(params, data) {
-    const cacheKey = this.getCacheKey(params);
-
-    window.localStorage.setItem(
-      cacheKey,
-      JSON.stringify({
-        timestamp: Date.now(),
-        data,
-      }),
-    );
-  }
-
-  getCache(params) {
-    const cacheKey = this.getCacheKey(params);
-
-    const cache = window.localStorage.getItem(cacheKey);
-
-    if (!cache) {
-      return null;
-    }
-
-    try {
-      const result = JSON.parse(cache);
-
-      if (Date.now() - result.timestamp > this.cachelife) {
-        console.log("缓存未命中");
-        return null;
-      }
-
-      console.log("缓存命中");
-      console.log(result.data);
-
-      return result.data;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
-
-  getCacheKey(params) {
-    return JSON.stringify({
-      language: params.language,
-      page: params.page,
-      per_page: params.per_page,
-    });
-  }
 }
 
-export const service = new RepositoryService();
+export const service = new RepositoryService(cacheService);

@@ -1,0 +1,19 @@
+@use "./utils" as *;
+
+.detail-list {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.detail-item-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 8px;
+}
+
+.detail-data {
+  @include ellipsis;
+
+  margin-left: 16px;
+  margin-bottom: 0;
+}

@@ -1,5 +1,6 @@
 import { formatNumber } from "../utils";
 import styles from "./card.module.scss";
+import { DetailItem, DetailList } from "./details";
 import { Icon } from "./icon";
 
 export function Card(props) {
@@ -8,22 +9,20 @@ export function Card(props) {
       <Rank value={props.rank} />
       <Avatar src={props.avatar} />
       <ProjectName href={props.url}>{props.name}</ProjectName>
-      <ProjectDetails>
-        <ProjectDetailsItem icon={<Icon name="user" color="orange" />} emphasis>
+      <DetailList>
+        <DetailItem icon={<Icon name="user" color="orange" />} emphasis>
           {props.username}
-        </ProjectDetailsItem>
-        <ProjectDetailsItem icon={<Icon name="star" color="yellow" />}>
+        </DetailItem>
+        <DetailItem icon={<Icon name="star" color="yellow" />}>
           {formatNumber(props.stars)} stars
-        </ProjectDetailsItem>
-        <ProjectDetailsItem icon={<Icon name="code-fork" color="#1f74e7" />}>
+        </DetailItem>
+        <DetailItem icon={<Icon name="code-fork" color="#1f74e7" />}>
           {formatNumber(props.forks)} forks
-        </ProjectDetailsItem>
-        <ProjectDetailsItem
-          icon={<Icon name="triangle-exclamation" color="#f14c4c" />}
-        >
+        </DetailItem>
+        <DetailItem icon={<Icon name="triangle-exclamation" color="#f14c4c" />}>
           {formatNumber(props.issues)} open issues
-        </ProjectDetailsItem>
-      </ProjectDetails>
+        </DetailItem>
+      </DetailList>
     </CardContainer>
   );
 }
@@ -44,26 +43,6 @@ function ProjectName(props) {
   return (
     <div className={styles["project-name"]}>
       <a href={props.href}>{props.children}</a>
-    </div>
-  );
-}
-
-function ProjectDetails(props) {
-  return <dl className={styles["project-details"]}>{props.children}</dl>;
-}
-
-function ProjectDetailsItem(props) {
-  return (
-    <div className={styles["project-details-item-wrapper"]}>
-      <dt>{props.icon}</dt>
-      <dd
-        className={styles["project-details-data"]}
-        style={{
-          fontWeight: props.emphasis ? "bold" : "normal",
-        }}
-      >
-        {props.children}
-      </dd>
     </div>
   );
 }

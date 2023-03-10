@@ -30,20 +30,3 @@
   color: $primary-color;
   text-align: center;
 }
-
-.project-details {
-  width: 100%;
-}
-
-.project-details-item-wrapper {
-  display: flex;
-  align-items: center;
-  margin: 8px;
-}
-
-.project-details-data {
-  @include ellipsis;
-
-  margin-left: 16px;
-  margin-bottom: 0;
-}

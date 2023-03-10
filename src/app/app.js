@@ -7,9 +7,9 @@ import zhCN from "antd/locale/zh_CN";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { Popular } from "./pages";
+import { Battle, Popular } from "./pages";
 
-const Battle = lazy(() => import("./pages/battle"));
+const BattlePlayer = lazy(() => import("./pages/battle-player"));
 const BattleResult = lazy(() => import("./pages/battle-result"));
 
 const router = createBrowserRouter([
@@ -19,17 +19,13 @@ const router = createBrowserRouter([
   },
   {
     path: "battle",
-    element: (
-      <Suspense>
-        <Battle />
-      </Suspense>
-    ),
+    element: <Battle />,
     children: [
       {
         index: true,
         element: (
           <Suspense>
-            <Battle />
+            <BattlePlayer />
           </Suspense>
         ),
       },
