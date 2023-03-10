@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
@@ -22,20 +23,26 @@ export function Players(props) {
     <div className={styles.players}>
       <h2 className={styles["players-title"]}>Players</h2>
       <div className={styles["player-form-container"]}>
-        <PlayerForm
-          value={player1}
-          onChange={(username) => {
-            setPlayer1(username);
-          }}
-          label="Player One"
-        />
-        <PlayerForm
-          value={player2}
-          onChange={(username) => {
-            setPlayer2(username);
-          }}
-          label="Player Two"
-        />
+        <Row gutter={[16, 16]}>
+          <Col sm={12} xs={24}>
+            <PlayerForm
+              value={player1}
+              onChange={(username) => {
+                setPlayer1(username);
+              }}
+              label="Player One"
+            />
+          </Col>
+          <Col sm={12} xs={24}>
+            <PlayerForm
+              value={player2}
+              onChange={(username) => {
+                setPlayer2(username);
+              }}
+              label="Player Two"
+            />
+          </Col>
+        </Row>
       </div>
     </div>
   );

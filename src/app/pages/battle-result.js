@@ -1,3 +1,4 @@
+import { Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -46,8 +47,22 @@ export default function BattleResult() {
     ready && (
       <div className={styles["battle-result"]}>
         <Panels>
-          <Panel player={player1Info} />
-          <Panel player={player2Info} />
+          <Row>
+            <Col
+              style={{ display: "flex", justifyContent: "center" }}
+              sm={12}
+              xs={24}
+            >
+              <Panel player={player1Info} />
+            </Col>
+            <Col
+              style={{ display: "flex", justifyContent: "center" }}
+              sm={12}
+              xs={24}
+            >
+              <Panel player={player2Info} />
+            </Col>
+          </Row>
         </Panels>
         <Button
           onClick={() => {

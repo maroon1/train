@@ -1,4 +1,4 @@
-import { message as antdMessage } from "antd";
+import { Col, message as antdMessage, Row } from "antd";
 import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useSearchParams } from "react-router-dom";
@@ -7,18 +7,17 @@ import { catchGithubRateLimitError } from "../utils";
 import { service } from "./repository.service";
 
 import {
+  BattleButton,
   BattleLink,
   Card,
-  Col,
   Content,
   Empty,
   Filter,
-  Grid,
   Header,
   Layout,
+  Loader,
   Loading,
 } from "@/components";
-import { Loader } from "@/components/loader";
 
 export function Popular() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -139,9 +138,9 @@ export function Popular() {
             loadMore={onLoadMore}
             useWindow={false}
           >
-            <Grid>
+            <Row gutter={[16, 16]} justify="space-around">
               {projects.items.map((project, i) => (
-                <Col width="25%" key={i}>
+                <Col key={i} lg={6} md={8} sm={12} xs={12}>
                   <Card
                     rank={i + 1}
                     url={project.html_url}
@@ -154,9 +153,10 @@ export function Popular() {
                   />
                 </Col>
               ))}
-            </Grid>
+            </Row>
           </InfiniteScroll>
         )}
+        <BattleButton to="/battle" />
       </Content>
     </Layout>
   );

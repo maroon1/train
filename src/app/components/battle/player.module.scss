@@ -12,6 +12,8 @@
 
 .player-form-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .player-form {
@@ -55,6 +57,7 @@
 }
 
 .input {
+  flex: auto;
   padding: 8px 16px;
   border-radius: 4px;
   color: #333;

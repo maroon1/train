@@ -27,3 +27,11 @@ export function PopularLink(props) {
     </Link>
   );
 }
+
+export function BattleButton(props) {
+  return (
+    <Link className={styles["battle-button"]} {...props}>
+      <Icon color="white" name="people-arrows" />
+    </Link>
+  );
+}

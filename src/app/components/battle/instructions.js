@@ -1,3 +1,4 @@
+import { Col, Row } from "antd";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 
@@ -13,33 +14,47 @@ export function Instructions(props) {
     <div className={styles.instructions}>
       <div className={styles["instructions-title"]}>Instructions</div>
       <div className={styles["instruction-item-container"]}>
-        <InstructionItem icon={<Icon size={64} color="orange" name="users" />}>
-          Enter tow Github
-        </InstructionItem>
-        <InstructionItem
-          active={ready}
-          icon={
-            <Icon
-              size={64}
-              color={props.players ? "red" : "gray"}
-              name="jet-fighter"
-            />
-          }
-          onClick={() => {
-            if (!ready) {
-              return;
-            }
+        <Row>
+          <Col sm={8} xs={24}>
+            <InstructionItem
+              icon={<Icon size={64} color="orange" name="users" />}
+            >
+              Enter tow Github
+            </InstructionItem>
+          </Col>
+          <Col sm={8} xs={24}>
+            <InstructionItem
+              active={ready}
+              icon={
+                <Icon
+                  size={64}
+                  color={props.players ? "red" : "gray"}
+                  name="jet-fighter"
+                />
+              }
+              onClick={() => {
+                if (!ready) {
+                  return;
+                }
 
-            const [player1, player2] = props.players ?? [];
+                const [player1, player2] = props.players ?? [];
 
-            navigate(`/battle/result?player1=${player1}&player2=${player2}`);
-          }}
-        >
-          Battle
-        </InstructionItem>
-        <InstructionItem icon={<Icon size={64} color="yellow" name="trophy" />}>
-          See the winner
-        </InstructionItem>
+                navigate(
+                  `/battle/result?player1=${player1}&player2=${player2}`,
+                );
+              }}
+            >
+              Battle
+            </InstructionItem>
+          </Col>
+          <Col sm={8} xs={24}>
+            <InstructionItem
+              icon={<Icon size={64} color="yellow" name="trophy" />}
+            >
+              See the winner
+            </InstructionItem>
+          </Col>
+        </Row>
       </div>
     </div>
   );
