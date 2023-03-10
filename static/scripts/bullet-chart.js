@@ -88,7 +88,7 @@
 
     bullet.css(
       'transform',
-      `scale3d(${fontSizeScale}, ${fontSizeScale}, 1) translate3d(${textWidth}px, ${top}px, 0px)`,
+      `translate3d(${textWidth}px, ${top}px, 0px) scale3d(${fontSizeScale}, ${fontSizeScale}, 1)`,
     );
 
     return {
@@ -102,9 +102,9 @@
             step(now) {
               bullet.css(
                 'transform',
-                `scale3d(${fontSizeScale}, ${fontSizeScale}, 1) translate3d(${
+                `translate3d(${
                   textWidth - now
-                }px, ${top}px, 0px)`,
+                }px, ${top}px, 0px) scale3d(${fontSizeScale}, ${fontSizeScale}, 1)`,
               );
             },
             complete() {
