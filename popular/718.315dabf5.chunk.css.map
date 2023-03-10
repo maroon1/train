@@ -1,1 +1,0 @@
-{"version":3,"file":"718.315dabf5.chunk.css","mappings":"AAAA,sBAGE,mBAFA,aACA,qBACA","sources":["webpack://lf-training/./src/app/pages/battle-result.module.scss"],"sourcesContent":[".battle-result {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n"],"names":[],"sourceRoot":""}
