@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Popular</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="container"></div>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      const primaryColor = "#61dafb";
+      const ellipsis = {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+      };
+
+      class RepositoryService {
+        api = new URL("https://api.github.com/search/repositories");
+
+        cachelife = 10000;
+
+        getRepositories(params) {
+          const newUrl = new URL(this.api);
+
+          const { language, ...restParams } = params;
+
+          newUrl.searchParams.set("q", `stars:>1 language:${language}`);
+          newUrl.searchParams.set("sort", "stars");
+          newUrl.searchParams.set("order", "desc");
+          newUrl.searchParams.set("type", "Repositories");
+
+          Object.entries(restParams).forEach(([key, value]) => {
+            newUrl.searchParams.set(key, value);
+          });
+
+          const cache = this.getCache(newUrl.toString());
+
+          if (cache != null) {
+            return Promise.resolve(cache);
+          }
+
+          const url = new URL(this.api);
+
+          Object.entries(params).forEach(([key, value]) => {
+            newUrl.searchParams.set(key, value);
+          });
+
+          return fetch(newUrl)
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+
+              throw res;
+            })
+            .then((data) => {
+              this.setCache(newUrl.toString(), data.items);
+
+              return data.items;
+            });
+        }
+
+        setCache(cacheKey, data) {
+          window.localStorage.setItem(
+            cacheKey,
+            JSON.stringify({
+              timestamp: Date.now(),
+              data,
+            }),
+          );
+        }
+
+        getCache(cacheKey) {
+          const cache = window.localStorage.getItem(cacheKey);
+
+          if (!cache) {
+            return null;
+          }
+
+          try {
+            const result = JSON.parse(cache);
+
+            if (Date.now() - result.timestamp > this.cachelife) {
+              console.log("缓存未命中");
+              return null;
+            }
+
+            console.log("缓存命中");
+            console.log(result.data);
+
+            return result.data;
+          } catch (error) {
+            console.error(error);
+            return null;
+          }
+        }
+
+        getCacheKey(params) {
+          return JSON.stringify({
+            language: params.language,
+            page: params.page,
+            per_page: params.per_page,
+          });
+        }
+      }
+
+      const service = new RepositoryService();
+
+      function App() {
+        const url = new URL(window.location.href);
+        const [language] = React.useState(url.searchParams.get("language"));
+        const [loading, setLoading] = React.useState(true);
+        const [loadingMore, setLoadingMore] = React.useState(false);
+        const [projects, setProjects] = React.useState([]);
+        const [errorOccurred, setErrorOccurred] = React.useState(false);
+        const pageNumberRef = React.useRef(1);
+
+        React.useEffect(() => {
+          service
+            .getRepositories({
+              language,
+              page: 1,
+              per_page: 10,
+            })
+            .then((data) => {
+              setLoading(false);
+              setProjects((prevProjects) => projects.concat(data));
+            })
+            .catch((err) => {
+              const message = catchGithubRateLimitError(err);
+
+              if (message) {
+                setErrorOccurred(message);
+              } else {
+                setErrorOccurred(true);
+              }
+              console.error(err);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        }, [language]);
+
+        const onLoadMore = () => {
+          if (loadingMore) {
+            return;
+          }
+
+          setLoadingMore(true);
+
+          service
+            .getRepositories({
+              language,
+              page: pageNumberRef.current + 1,
+              per_page: 10,
+            })
+            .then((data) => {
+              setProjects((prevProjects) => projects.concat(data));
+            })
+            .catch((err) => {
+              const message = catchGithubRateLimitError(err);
+
+              if (!message) {
+                console.error(err);
+                alert("发生未知错误，请重试");
+              } else {
+                alert(message);
+              }
+            })
+            .finally(() => {
+              setLoadingMore(false);
+            });
+        };
+
+        return (
+          <Layout>
+            <Header>
+              <Filter
+                value={language}
+                onChange={(value) => {
+                  const url = new URL(window.location.href);
+
+                  if (value) {
+                    url.searchParams.set("language", value);
+                  } else {
+                    url.searchParams.delete("language");
+                  }
+
+                  window.location.href = url.toString();
+                }}
+              />
+            </Header>
+            <Content>
+              {loading ? (
+                <Loading />
+              ) : errorOccurred ? (
+                <Empty
+                  message={
+                    typeof errorOccurred === "string"
+                      ? errorOccurred
+                      : "发生未知错误，请刷新页面重试"
+                  }
+                />
+              ) : (
+                <Grid>
+                  {projects.map((project, i) => (
+                    <Col width="25%" key={project.id}>
+                      <Card
+                        rank={i + 1}
+                        url={project.html_url}
+                        avatar={project.owner.avatar_url}
+                        name={project.name}
+                        username={project.owner.login}
+                        stars={project.stargazers_count}
+                        forks={project.forks}
+                        issues={project.open_issues}
+                      />
+                    </Col>
+                  ))}
+                </Grid>
+              )}
+              {!loading && !errorOccurred && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "16px 0",
+                  }}
+                >
+                  <Button loading={loadingMore} onClick={onLoadMore}>
+                    加载更多
+                  </Button>
+                </div>
+              )}
+            </Content>
+          </Layout>
+        );
+      }
+
+      function catchGithubRateLimitError(res) {
+        if (res instanceof Response) {
+          if (!res.headers.has("x-ratelimit-remaining")) {
+            return false;
+          }
+
+          if (res.headers.get("x-ratelimit-remaining") === "0") {
+            const error = `慢一点，请求太频繁了，${Math.ceil(
+              (res.headers.get("x-ratelimit-reset") * 1000 - Date.now()) / 1000,
+            )}秒后重试`;
+
+            return error;
+          }
+        }
+
+        return false;
+      }
+
+      function formatNumber(num) {
+        return Intl.NumberFormat("en-US", { style: "decimal" }).format(num);
+      }
+
+      function Layout(props) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minWidth: 1200,
+              height: "100%",
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Header(props) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderBottom: "1px solid rgba(0, 0, 0, 0.9)",
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Content(props) {
+        return (
+          <div
+            style={{
+              flex: "auto",
+              width: 1000,
+              minHeight: 0,
+              margin: "0 auto",
+              overflow: "auto",
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Filter(props) {
+        const languages = [
+          { value: "javascript", title: "Javascript" },
+          { value: "ruby", title: "Ruby" },
+          { value: "java", title: "Java" },
+          { value: "css", title: "CSS" },
+          { value: "python", title: "Python" },
+        ];
+
+        return (
+          <ul style={{ display: "flex", alignItems: "center", margin: 16 }}>
+            <FilterItem active={!props.value} onClick={() => props.onChange()}>
+              All
+            </FilterItem>
+            {languages.map((lang) => (
+              <FilterItem
+                key={lang.value}
+                active={props.value === lang.value}
+                onClick={() => props.onChange(lang.value)}
+              >
+                {lang.title}
+              </FilterItem>
+            ))}
+          </ul>
+        );
+      }
+
+      function FilterItem(props) {
+        return (
+          <li
+            style={{
+              padding: "0 8px",
+              cursor: "pointer",
+              color: props.active ? primaryColor : undefined,
+            }}
+            onClick={props.onClick}
+          >
+            {props.children}
+          </li>
+        );
+      }
+
+      function Grid(props) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+              margin: "0 -8px",
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Col(props) {
+        return (
+          <div style={{ flex: "none", width: props.width, padding: 8 }}>
+            {props.children}
+          </div>
+        );
+      }
+
+      function Card(props) {
+        return (
+          <CardContainer>
+            <Rank value={props.rank} />
+            <Avatar src={props.avatar} />
+            <ProjectName href={props.url}>{props.name}</ProjectName>
+            <ProjectDetails>
+              <ProjectDetailsItem
+                icon={<FontAwesomeIcon name="user" color="orange" />}
+                emphasis
+              >
+                {props.username}
+              </ProjectDetailsItem>
+              <ProjectDetailsItem
+                icon={<FontAwesomeIcon name="star" color="yellow" />}
+              >
+                {formatNumber(props.stars)} stars
+              </ProjectDetailsItem>
+              <ProjectDetailsItem
+                icon={<FontAwesomeIcon name="code-fork" color="#1f74e7" />}
+              >
+                {formatNumber(props.forks)} forks
+              </ProjectDetailsItem>
+              <ProjectDetailsItem
+                icon={
+                  <FontAwesomeIcon
+                    name="triangle-exclamation"
+                    color="#f14c4c"
+                  />
+                }
+              >
+                {formatNumber(props.issues)} open issues
+              </ProjectDetailsItem>
+            </ProjectDetails>
+          </CardContainer>
+        );
+      }
+
+      function Rank(props) {
+        return <div style={{ fontSize: 32 }}>#{props.value}</div>;
+      }
+
+      function Avatar(props) {
+        return (
+          <img
+            style={{
+              width: 80,
+              height: 80,
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              objectFit: "cover",
+            }}
+            src={props.src}
+            alt="头像"
+          />
+        );
+      }
+
+      function ProjectName(props) {
+        return (
+          <div
+            style={{
+              marginTop: 16,
+              fonsSize: 24,
+              fonstWeight: "bold",
+              color: primaryColor,
+              ...ellipsis,
+            }}
+          >
+            <a href={props.href}>{props.children}</a>
+          </div>
+        );
+      }
+
+      function ProjectDetails(props) {
+        return <dl style={{ width: "100%" }}>{props.children}</dl>;
+      }
+
+      function ProjectDetailsItem(props) {
+        return (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <dt>{props.icon}</dt>
+            <dd
+              style={{
+                fontWeight: props.emphasis ? "bold" : "normal",
+                marginLeft: 8,
+                ...ellipsis,
+              }}
+            >
+              {props.children}
+            </dd>
+          </div>
+        );
+      }
+
+      function FontAwesomeIcon(props) {
+        const size = props.size || 16;
+
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: size,
+              height: size,
+              color: props.color,
+              fontSize: size,
+            }}
+          >
+            <i className={`fa-solid fa-${props.name} ${props.className}`}></i>
+          </div>
+        );
+      }
+
+      function CardContainer(props) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              border: "1px solid rgba(0, 0, 0, 0.5)",
+              borderRadius: 4,
+              padding: "16px 32px",
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Button(props) {
+        const { loading, ...restProps } = props;
+
+        return (
+          <button
+            style={{
+              display: "flex",
+              alignItems: "center",
+              minWidth: 48,
+              border: "1px solid rgba(0, 0, 0, 0.6)",
+              borderRadius: 8,
+              padding: "8px 16px",
+              fontSize: 14,
+              color: "#000",
+              backgroundColor: primaryColor,
+              cursor: "pointer",
+            }}
+            {...restProps}
+          >
+            {props.loading && (
+              <div style={{ marginRight: 8 }}>
+                <FontAwesomeIcon name="spinner" className="fa-spin-pulse" />
+              </div>
+            )}
+            {props.children}
+          </button>
+        );
+      }
+
+      function Center(props) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              ...props.style,
+            }}
+          >
+            {props.children}
+          </div>
+        );
+      }
+
+      function Empty(props) {
+        return (
+          <Center style={{ height: 200 }}>
+            <p>{props.message}</p>
+          </Center>
+        );
+      }
+
+      function Loading() {
+        return (
+          <Center style={{ height: 200 }}>
+            <FontAwesomeIcon
+              size={48}
+              name="spinner"
+              className="fa-spin-pulse"
+            />
+          </Center>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("container"));
+    </script>
+    <script
+      src="https://kit.fontawesome.com/bb2fa05758.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

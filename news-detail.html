@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新闻详情页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./styles/official-site/news-detail.css" />
+  </head>
+  <body>
+    <header class="header sm:min-w-[1200px]">
+      <div class="fixed-container sm:w-[1200px]">
+        <div class="header__logo">
+          <img src="./assets/official-site/logo.svg" alt="Logo" />
+          <span class="header__title">企业站</span>
+        </div>
+        <div class="flex-auto"></div>
+        <div class="header__menu sm:hidden">
+          <img src="./assets/official-site/menu.svg" alt="菜单" />
+        </div>
+        <nav class="nav nav--horizontal sm:block">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a class="nav__item-text" href="official-site.html">首页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news.html">新闻列表页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="about-us.html">关于我们</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="drawer">
+      <div class="drawer__container">
+        <div class="drawer__closer">
+          <img src="./assets/official-site/close.svg" alt="关闭按钮" />
+        </div>
+        <nav class="drawer__content nav nav--vertical">
+          <ul>
+            <li class="nav__item">
+              <a class="nav__item-text" href="official-site.html">首页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="news.html">新闻列表页</a>
+            </li>
+            <li class="nav__item">
+              <a class="nav__item-text" href="about-us.html">关于我们</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <main class="main sm:w-[1200px]">
+      <h2 class="page-title sm:text-5xl sm:my-6">新闻详情页</h2>
+      <article class="text-sm sm:text-base text-[#353535]"></article>
+    </main>
+    <footer class="footer sm:min-w-[1200px]">
+      <div class="fixed-container sm:w-[1200px]">
+        <address class="footer__address">
+          地址：中国山东省青岛市市南区某某中路20号
+          <br />
+          邮箱：1370XXX171@qq.com
+          <br />
+          电话：0591-88888888
+        </address>
+        <div class="copyright">
+          <img
+            class="copyright__qrcode"
+            src="./assets/official-site/qrcode.png"
+            alt="二维码"
+          />
+          <div class="copyright__content">
+            Copyright © 2009 - 2022 Cld , All Rights Reserved
+            <br />
+            某某网络科技有限公司 版权所有 陕ICP备xxxxxxx号
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="./scripts/official-site/common.js"></script>
+    <script src="./scripts/official-site/news-detail.js"></script>
+  </body>
+</html>
