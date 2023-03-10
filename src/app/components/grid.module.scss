@@ -1,0 +1,11 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 -8px;
+}
+
+.col {
+  flex: none;
+  padding: 8px;
+}

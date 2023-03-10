@@ -1,0 +1,23 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.9);
+  height: 56px;
+}
+
+.content {
+  flex: auto;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 16px 16px;
+  overflow: auto;
+}
